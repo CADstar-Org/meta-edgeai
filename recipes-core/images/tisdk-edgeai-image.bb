@@ -4,19 +4,11 @@ require recipes-core/images/tisdk-default-image.bb
 
 PN:adas = "tisdk-adas-image"
 
-COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
+COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx|tda54"
 
 EDGEAI_STACK = " \
-        ti-vision-apps-dev \
-        ti-edgeai-firmware \
-        ti-tidl-dev \
-        edgeai-tiovx-kernels-dev \
-        edgeai-tiovx-kernels-source \
-        edgeai-apps-utils-source \
         edgeai-test-data \
         edgeai-tidl-models \
-        edgeai-tiovx-apps-dev \
-        edgeai-tiovx-apps-source \
 "
 
 EDGEAI_STACK:append:edgeai = " \
@@ -40,7 +32,6 @@ EDGEAI_STACK:append:edgeai = " \
 
 EDGEAI_STACK:append:adas = " \
         ti-tidl-osrt-staticdev \
-        edgeai-gst-plugins \
 "
 
 IMAGE_INSTALL:append = " \
