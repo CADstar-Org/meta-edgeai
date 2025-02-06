@@ -17,13 +17,14 @@ PLAT_SOC:j784s4 = "j784s4"
 PLAT_SOC:j722s = "j722s"
 PLAT_SOC:j742s2 = "j742s2"
 PLAT_SOC:am62axx = "am62a"
+PLAT_SOC:tda54 = "tda54"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "edgeai-tiovx-kernels yaml-cpp glib-2.0 ffmpeg libdrm"
 RDEPENDS:${PN}-source = "cmake bash python3-core"
 
-COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
+COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx|tda54"
 
 export SOC = "${PLAT_SOC}"
 

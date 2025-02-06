@@ -19,6 +19,7 @@ PLAT_SOC:j722s = "j722s"
 PLAT_SOC:am62axx = "am62a"
 PLAT_SOC:am62xx = "am62x"
 PLAT_SOC:am62pxx = "am62p"
+PLAT_SOC:tda54 = "tda54"
 
 S = "${WORKDIR}/git"
 
@@ -34,7 +35,7 @@ RDEPENDS:${PN}:remove:am62pxx = "edgeai-tiovx-modules"
 RDEPENDS:${PN}-source:remove:am62xx = "edgeai-tiovx-modules-dev"
 RDEPENDS:${PN}-source:remove:am62pxx = "edgeai-tiovx-modules-dev"
 
-COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j742s2|j722s|am62axx|am62xx|am62pxx"
+COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j742s2|j722s|am62axx|am62xx|am62pxx|tda54"
 
 export SOC = "${PLAT_SOC}"
 
