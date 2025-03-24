@@ -5,3 +5,6 @@ SRC_URI:append:tda54 = " \
     file://0002-HACK-hardcode-SoC-name-as-TDA54.patch \
 "
 
+PATCHTOOL = "git"
+
+PR:append = "_edgeai_0"
