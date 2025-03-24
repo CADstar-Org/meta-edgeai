@@ -22,4 +22,13 @@ SRC_URI:append:j722s = " \
     file://0001-arm64-dts-ti-j722s-Add-DTB-overlay-for-RTOS-memory-m.patch \
 "
 
+SRC_URI:append:tda54 = " \
+    file://0001-arm64-dts-ti-j722s-Add-DTB-overlay-for-RTOS-memory-m.patch \
+    file://arm64-dts-ti-k3-tda54-vdk-Enable-IPC-with-M55-and-C7.patch \
+    file://irqchip-irq-ti-sci-intr-Update-Mailbox-IRQ-input-lin.patch \
+    file://remoteproc-k3-dsp-Prevent-TI-SCI-messaging.patch \
+    file://remoteproc-k3-m4-Prevent-TI-SCI-messaging.patch \
+    file://arm64-defconfig-Enable-TI-K3-M4-Remoteproc-driver.patch \
+"
+
 PR:append = "_edgeai_8"

@@ -1,0 +1,120 @@
+From 066ca31c9bf050c247d6c880096d4b76b0d94e68 Mon Sep 17 00:00:00 2001
+From: Beleswar Padhi <b-padhi@ti.com>
+Date: Tue, 18 Mar 2025 15:48:22 +0530
+Subject: [PATCH 1/5] arm64: dts: ti: k3-tda54-vdk: Enable IPC with M55 and C76
+ cores
+
+Enable IPC with M55 and C76 remote cores by:
+ * Adding node definitions for M55 and C76 remote processors.
+ * Adding reserved memory carveouts used for IPC and Firmware.
+ * Assigning mailboxes for TX and RX directions.
+
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 79 +++++++++++++++++++++----
+ 1 file changed, 69 insertions(+), 10 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+index d6a0bcce6ef7..f96722bcff4b 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
++++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+@@ -27,6 +27,52 @@ memory@80000000 {
+ 		      <0x20 0x80000000 0x1f 0x80000000>;
+ 	};
+ 
++	reserved_memory: reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		mcu_m55_dma_memory_region: mcu-m55-dma-memory@91000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0x91000000 0x00 0x100000>;
++			no-map;
++		};
++
++		mcu_m55_memory_region: mcu-m55-memory@91100000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0x91100000 0x00 0xf00000>;
++			no-map;
++		};
++
++		c76_dma_memory_region: c76-dma-memory@ac000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xac000000 0x00 0x100000>;
++			no-map;
++		};
++
++		c76_memory_region: c76-memory@ac1000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xac100000 0x00 0xf00000>;
++			no-map;
++		};
++
++	};
++
++	mcu_m55: m55@24000000 {
++		compatible = "ti,am64-m4fss";
++		reg = <0x00 0x24000000 0x00 0xffff>,
++		      <0x00 0x24050000 0x00 0xffff>;
++		reg-names = "itcm", "btcm";
++		status = "disabled";
++	};
++
++	c76: c76@64000000 {
++		compatible = "ti,j721s2-c71-dsp";
++		reg = <0x00 0x64000000 0x00 0x2fffff>;
++		reg-names = "l2sram";
++		status = "disabled";
++	};
++
+ 	virtio_block@41800000 {
+ 	  compatible = "virtio,mmio";
+ 	  reg = <0x0 0x41800000 0 0x10000>;
+@@ -66,20 +112,33 @@ reboot{
+ 	        };
+ 	};
+ 
+-	sample-user-mailbox {
+-		compatible = "ti,mbox-sample-user";
+-		mboxes = <&mailbox0_cluster0 &mbox_tda5_sample>;
+-	};
+-
+ };
+ 
+ &mailbox0_cluster0 {
+ 	status = "okay";
+-	interrupts = <418>;
++	interrupts = <420>;
+ 
+-	/* Sample Mailbox Assignment */
+-	mbox_tda5_sample: mbox-A720 {
+-		ti,mbox-rx = <0 0 0>;
+-		ti,mbox-tx = <0 0 0>;
++	mbox_mcu_m55: mbox-mcu-m55 {
++		ti,mbox-rx = <5 0 2>;
++		ti,mbox-tx = <4 0 2>;
+ 	};
++
++	mbox_c76: mbox-c76 {
++		ti,mbox-rx = <10 0 2>;
++		ti,mbox-tx = <11 0 2>;
++	};
++};
++
++&mcu_m55 {
++	mboxes = <&mailbox0_cluster0 &mbox_mcu_m55>;
++	memory-region = <&mcu_m55_dma_memory_region>,
++			<&mcu_m55_memory_region>;
++	status = "okay";
++};
++
++&c76 {
++	mboxes = <&mailbox0_cluster0 &mbox_c76>;
++	memory-region = <&c76_dma_memory_region>,
++			<&c76_memory_region>;
++	status = "okay";
+ };
+-- 
+2.34.1
+
