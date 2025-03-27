@@ -39,6 +39,7 @@ IMAGE_INSTALL:append = " \
     packagegroup-arago-gst-sdk-target \
     packagegroup-edgeai-tisdk-addons \
     ti-rpmsg-char-dev \
+    ti-rpmsg-char \
 "
 # disable matrix gui for PSDKLA
 IMAGE_INSTALL:remove = "\
