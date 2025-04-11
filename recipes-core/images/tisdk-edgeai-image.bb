@@ -9,6 +9,8 @@ COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx|tda54"
 EDGEAI_STACK = " \
         edgeai-test-data \
         edgeai-tidl-models \
+        ti-vision-apps-dev \
+        ti-vision-apps \
 "
 
 EDGEAI_STACK:append:edgeai = " \

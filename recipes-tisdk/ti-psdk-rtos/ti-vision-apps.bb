@@ -3,7 +3,7 @@ DESCRIPTION = "Builds tivision_apps user space library"
 
 PR:append = "_edgeai_10"
 
-PV = "10.1.0"
+PV = "11.0.1"
 
 LICENSE = "TI-TFL & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause & MIT & Apache-2.0 & Apache-2.0-with-LLVM-exception & \
            Khronos & Hewlett-Packard & Patrick-Powell & FTL & Zlib & CC0-1.0 & OpenSSL"
@@ -15,7 +15,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302 \
                     file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10 \
                     file://${COMMON_LICENSE_DIR}/Apache-2.0-with-LLVM-exception;md5=0bcd48c3bdfef0c9d9fd17726e4b7dab \
-                    file://repo/tiovx/include/VX/vx.h;beginline=1;endline=15;md5=37315206223081f32a5b9aaaf912f637 \
+                    file://repo/tiovx/include/VX/vx.h;beginline=1;endline=15;md5=880d98cf1447ea64efa55c179fd8c8fc \
                     file://${COREBASE}/../meta-ti/meta-ti-extras/licenses/Hewlett-Packard;md5=a07676ee09f5bfec457eb5ea75921d01 \
                     file://${COREBASE}/../meta-ti/meta-ti-extras/licenses/Patrick-Powell;md5=7e10716f13cff502f3cf6ebf8fe29c1e \
                     file://${COMMON_LICENSE_DIR}/FTL;md5=f0bf6b09ee8b02121ed10709d9e49d8b \
@@ -24,7 +24,10 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COREBASE}/meta/files/common-licenses/OpenSSL;md5=4eb1764f3e65fafa1a25057f9082f2ae \
                     "
 
-SRC_URI = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.10.01.00.04;manifest=vision_apps_yocto.xml"
+SRCREV = "0d14255f2af969b4856197f6c4782ca77a938bf0"
+BRANCH = "tda54_presil"
+
+SRC_URI = "git://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=${BRANCH};manifest=vision_apps_yocto.xml"
 
 FILES:${PN} += "/opt/*"
 
@@ -69,6 +72,11 @@ do_compile() {
 
 do_install() {
     SOC=${PLAT_SOC} LINUX_FS_STAGE_PATH=${D} oe_runmake yocto_install
+    CP_ARGS="-Prf --preserve=mode,timestamps --no-preserve=ownership"
+
+    mkdir -p ${D}/opt/vision_apps
+    cp ${CP_ARGS} ${WORKDIR}/out/TDA54/A720/LINUX/release/vx_app_arm_ipc.out ${D}/opt/vision_apps
+    cp ${CP_ARGS} ${WORKDIR}/out/TDA54/A720/LINUX/release/vx_app_arm_remote_log.out ${D}/opt/vision_apps
 }
 
 INSANE_SKIP:${PN} += "ldflags"
