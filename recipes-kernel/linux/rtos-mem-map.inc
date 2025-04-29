@@ -28,6 +28,7 @@ SRC_URI:append:tda54 = " \
     file://0003-remoteproc-k3-dsp-Prevent-TI-SCI-messaging.patch \
     file://0004-remoteproc-k3-m4-Prevent-TI-SCI-messaging.patch \
     file://0005-arm64-defconfig-Enable-TI-K3-M4-Remoteproc-driver.patch \
+    file://0001-arch-k3-tda54-vdk.dts-Add-shared-memory-sections-for.patch \
 "
 
 PR:append = "_edgeai_8"

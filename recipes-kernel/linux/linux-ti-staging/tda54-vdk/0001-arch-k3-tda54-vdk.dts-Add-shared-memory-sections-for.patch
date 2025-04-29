@@ -1,0 +1,63 @@
+From 6eaac2c9347c304c61a842442b83d7d3adaa9413 Mon Sep 17 00:00:00 2001
+From: Shreyash Sinha <s-sinha@ti.com>
+Date: Tue, 15 Apr 2025 22:31:59 +0530
+Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
+ apps
+
+Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+index 2084f4fbf3d2..4771b8e39d30 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
++++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (C) 2025 Texas Instruments Incorporated - https://www.ti.com/
+  *
+- * 
++ *
+  */
+ 
+ /dts-v1/;
+@@ -55,7 +55,25 @@ c76_memory_region: c76-memory@ac1000000 {
+ 			reg = <0x00 0xac100000 0x00 0xf00000>;
+ 			no-map;
+ 		};
+-
++		vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@a0000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xa0000000 0x00 0x03000000>;
++			no-map;
++		};
++		vision_apps_memory_region: vision-apps-dma-memory@a3000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xa3000000 0x00 0x2e00000>;
++			no-map;
++		};
++		vision_apps_shared_region: vision_apps_shared-memories {
++			compatible = "dma-heap-carveout";
++			reg = <0x00 0xc0000000 0x00 0x3c000000>;
++		};
++		c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@880000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x08 0x80000000 0x00 0x80000000>;
++			no-map;
++		};
+ 	};
+ 
+ 	mcu_m55: m55@24000000 {
+@@ -99,7 +117,7 @@ virtio_gpu@53100000 {
+ 	mcc {
+ 	        compatible="arm,vexpress,config-bus";
+ 	        arm,vexpress,config-bridge=<&sysreg>;
+-	
++
+ 	        reset{
+ 	                compatible="arm,vexpress-reset";
+ 	                arm,vexpress-sysreg,func=<5 0>;
+-- 
+2.34.1
+
