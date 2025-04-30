@@ -23,11 +23,6 @@ SRC_URI:append:j722s = " \
 "
 
 SRC_URI:append:tda54 = " \
-    file://0001-arm64-dts-ti-k3-tda54-vdk-Enable-IPC-with-M55-and-C7.patch \
-    file://0002-irqchip-irq-ti-sci-intr-Update-Mailbox-IRQ-input-lin.patch \
-    file://0003-remoteproc-k3-dsp-Prevent-TI-SCI-messaging.patch \
-    file://0004-remoteproc-k3-m4-Prevent-TI-SCI-messaging.patch \
-    file://0005-arm64-defconfig-Enable-TI-K3-M4-Remoteproc-driver.patch \
     file://0001-arch-k3-tda54-vdk.dts-Add-shared-memory-sections-for.patch \
 "
 
