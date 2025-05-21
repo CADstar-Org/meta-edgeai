@@ -11,6 +11,7 @@ EDGEAI_STACK = " \
         edgeai-tidl-models \
         ti-vision-apps-dev \
         ti-vision-apps \
+        ti-edgeai-firmware \
 "
 
 EDGEAI_STACK:append:edgeai = " \

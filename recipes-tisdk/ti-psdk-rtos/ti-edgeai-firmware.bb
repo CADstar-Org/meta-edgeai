@@ -21,11 +21,11 @@ PLAT_SFX:j742s2 = "j742s2"
 PLAT_SFX:am62axx = "am62a"
 PLAT_SFX:tda54 = "tda54"
 
-SRCREV = "a514fa172b77d21e3f44956bd7e0c79737f86e82"
-BRANCH = "main"
+SRCREV = "3a40475abdf84dffb2e3b6b350585ff938e35276"
+BRANCH = "tda54_presil"
 
 SRC_URI = " \
-    git://git.ti.com/git/processor-sdk/psdk_fw.git;protocol=https;branch=${BRANCH} \
+    git://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_fw.git;protocol=ssh;branch=${BRANCH} \
 "
 
 S = "${WORKDIR}/git"
@@ -56,12 +56,25 @@ C7X_2_FW   = "vx_app_rtos_linux_c7x_2.out"
 C7X_3_FW   = "vx_app_rtos_linux_c7x_3.out"
 C7X_4_FW   = "vx_app_rtos_linux_c7x_4.out"
 
+MCU0_FW = "vx_app_rtos_linux_mcu0.out"
+MCU1_FW = "vx_app_rtos_linux_mcu1.out"
+MCU2_FW = "vx_app_rtos_linux_mcu2.out"
+MCU3_FW = "vx_app_rtos_linux_mcu3.out"
+MCU4_FW = "vx_app_rtos_linux_mcu4.out"
+RMCU_0_0_FW = "vx_app_rtos_linux_rmcu0_0.out"
+RMCU_0_1_FW = "vx_app_rtos_linux_rmcu0_1.out"
+RMCU_1_0_FW = "vx_app_rtos_linux_rmcu1_0.out"
+RMCU_1_1_FW = "vx_app_rtos_linux_rmcu1_1.out"
+RMCU_2_0_FW = "vx_app_rtos_linux_rmcu2_0.out"
+RMCU_2_1_FW = "vx_app_rtos_linux_rmcu2_1.out"
+
 FW_LIST = ""
 FW_LIST:j721e =     "              ${MCU_1_1_FW} ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW}                             ${C66_1_FW} ${C66_2_FW} ${C7X_1_FW}"
 FW_LIST:j721s2 =    "              ${MCU_1_1_FW} ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW}                                                     ${C7X_1_FW} ${C7X_2_FW}"
 FW_LIST:j784s4 =    "              ${MCU_1_1_FW} ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW}                         ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW} ${C7X_4_FW}"
 FW_LIST:j742s2 =    "                            ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW}                         ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW}"
 FW_LIST:j722s =     "                            ${MCU_2_0_FW}                                                                                               ${C7X_1_FW} ${C7X_2_FW}"
+FW_LIST:tda54 =     "              ${MCU0_FW} ${C7X_1_FW}"
 FW_LIST:am62axx =   "${MCU_1_0_FW}                                                                                                                           ${C7X_1_FW}"
 
 do_install() {
@@ -186,6 +199,11 @@ ALTERNATIVE:${PN}:j722s = "\
                     j722s-c71_1-fw-sec \
                     "
 
+ALTERNATIVE:${PN}:tda54 = "\
+                    tda54-main-m55_0-fw   \
+                    tda54-c76_0-fw        \
+                    "
+
 ALTERNATIVE:${PN}:am62axx = "\
                     am62a-c71_0-fw \
                     am62a-c71_0-fw-sec \
@@ -271,6 +289,9 @@ ALTERNATIVE_LINK_NAME[j742s2-c71_2-fw-sec] = "${nonarch_base_libdir}/firmware/j7
 ALTERNATIVE_LINK_NAME[j722s-main-r5f0_0-fw] = "${nonarch_base_libdir}/firmware/j722s-main-r5f0_0-fw"
 ALTERNATIVE_LINK_NAME[j722s-c71_0-fw] = "${nonarch_base_libdir}/firmware/j722s-c71_0-fw"
 ALTERNATIVE_LINK_NAME[j722s-c71_1-fw] = "${nonarch_base_libdir}/firmware/j722s-c71_1-fw"
+
+ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw"
+ALTERNATIVE_LINK_NAME[tda54-c76_0-fw ] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw "
 
 ALTERNATIVE_LINK_NAME[j722s-main-r5f0_0-fw-sec] = "${nonarch_base_libdir}/firmware/j722s-main-r5f0_0-fw-sec"
 ALTERNATIVE_LINK_NAME[j722s-c71_0-fw-sec] = "${nonarch_base_libdir}/firmware/j722s-c71_0-fw-sec"
@@ -359,6 +380,9 @@ ALTERNATIVE_TARGET[j742s2-c71_2-fw-sec] = "${INSTALL_FW_DIR}/${C7X_3_FW}.signed"
 ALTERNATIVE_TARGET[j722s-main-r5f0_0-fw] = "${INSTALL_FW_DIR}/${MCU_2_0_FW}"
 ALTERNATIVE_TARGET[j722s-c71_0-fw] = "${INSTALL_FW_DIR}/${C7X_1_FW}"
 ALTERNATIVE_TARGET[j722s-c71_1-fw] = "${INSTALL_FW_DIR}/${C7X_2_FW}"
+
+ALTERNATIVE_TARGET[tda54-main-m55_0-fw] = "${INSTALL_FW_DIR}/${MCU0_FW}"
+ALTERNATIVE_TARGET[tda54-c76_0-fw] = "${INSTALL_FW_DIR}/${C7X_1_FW}"
 
 ALTERNATIVE_TARGET[j722s-main-r5f0_0-fw-sec] = "${INSTALL_FW_DIR}/${MCU_2_0_FW}.signed"
 ALTERNATIVE_TARGET[j722s-c71_0-fw-sec] = "${INSTALL_FW_DIR}/${C7X_1_FW}.signed"
