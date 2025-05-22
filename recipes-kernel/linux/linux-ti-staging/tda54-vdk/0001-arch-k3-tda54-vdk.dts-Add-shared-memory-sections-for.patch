@@ -1,4 +1,4 @@
-From 6eaac2c9347c304c61a842442b83d7d3adaa9413 Mon Sep 17 00:00:00 2001
+From cd42b8f9dd315aa213130d4a8559d30fc252efa0 Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
 Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
@@ -6,11 +6,11 @@ Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
 
 Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
 ---
- arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 43 +++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index 2084f4fbf3d2..4771b8e39d30 100644
+index 28b4051d1954..d72c29f32c46 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -22,34 +22,69 @@ index 2084f4fbf3d2..4771b8e39d30 100644
   */
  
  /dts-v1/;
-@@ -55,7 +55,25 @@ c76_memory_region: c76-memory@ac1000000 {
- 			reg = <0x00 0xac100000 0x00 0xf00000>;
+@@ -32,30 +32,53 @@ reserved_memory: reserved-memory {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
+-		mcu_m55_dma_memory_region: mcu-m55-dma-memory@91000000 {
++		mcu_m55_dma_memory_region: mcu-m55-dma-memory@a1000000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0x91000000 0x00 0x100000>;
++			reg = <0x00 0xa1000000 0x00 0x100000>;
  			no-map;
  		};
--
-+		vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@a0000000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xa0000000 0x00 0x03000000>;
-+			no-map;
-+		};
-+		vision_apps_memory_region: vision-apps-dma-memory@a3000000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xa3000000 0x00 0x2e00000>;
-+			no-map;
-+		};
-+		vision_apps_shared_region: vision_apps_shared-memories {
-+			compatible = "dma-heap-carveout";
-+			reg = <0x00 0xc0000000 0x00 0x3c000000>;
-+		};
-+		c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@880000000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x08 0x80000000 0x00 0x80000000>;
-+			no-map;
-+		};
- 	};
  
- 	mcu_m55: m55@24000000 {
-@@ -99,7 +117,7 @@ virtio_gpu@53100000 {
+-		mcu_m55_memory_region: mcu-m55-memory@91100000 {
++		mcu_m55_memory_region: mcu-m55-memory@a1100000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0x91100000 0x00 0xf00000>;
++			reg = <0x00 0xa1100000 0x00 0x01f00000>;
+ 			no-map;
+ 		};
+ 
+-		c76_dma_memory_region: c76-dma-memory@ac000000 {
++		c76_dma_memory_region: c76-dma-memory@ad000000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0xac000000 0x00 0x100000>;
++			reg = <0x00 0xad000000 0x00 0x100000>;
+ 			no-map;
+ 		};
+ 
+-		c76_memory_region: c76-memory@ac1000000 {
++		c76_memory_region: c76-memory@ad1000000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0xac100000 0x00 0xf00000>;
++			reg = <0x00 0xad100000 0x00 0x01f00000>;
+ 			no-map;
+ 		};
+ 
++        vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bb200000 {
++            compatible = "shared-dma-pool";
++            reg = <0x00 0xbb200000 0x00 0x03000000>;
++            no-map;
++        };
++
++        vision_apps_memory_region: vision-apps-dma-memory@be200000 {
++            compatible = "shared-dma-pool";
++            reg = <0x00 0xbe200000 0x00 0x02e00000>;
++            no-map;
++        };
++
++        vision_apps_shared_region: vision_apps_shared-memories {
++            compatible = "dma-heap-carveout";
++            reg = <0x00 0xe0000000 0x00 0x1c000000>;
++        };
++
++        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@880000000 {
++            compatible = "shared-dma-pool";
++            reg = <0x08 0x80000000 0x00 0x80000000>;
++            no-map;
++        };
++
+ 		secure_ddr: optee@9e800000 {
+ 			reg = <0x00 0x9e800000 0x00 0x01800000>;
+ 			no-map;
+@@ -86,7 +109,7 @@ virtio_gpu@53100000 {
  	mcc {
  	        compatible="arm,vexpress,config-bus";
  	        arm,vexpress,config-bridge=<&sysreg>;
