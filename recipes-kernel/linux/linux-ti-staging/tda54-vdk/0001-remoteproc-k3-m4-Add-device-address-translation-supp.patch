@@ -1,0 +1,80 @@
+From 850d63f01035110da5c36c3da264a954196a5a61 Mon Sep 17 00:00:00 2001
+From: Beleswar Padhi <b-padhi@ti.com>
+Date: Fri, 23 May 2025 11:14:19 +0530
+Subject: [PATCH] remoteproc: k3-m4: Add device address translation support
+
+The remoteproc ELF firmware has load addresses respective to the device
+address (from the remoteproc's point of view). So while loading the ELF
+from Linux, remoteproc core framework needs to translate this device
+address to a physical address (from the SoC view).
+
+Add this DA to PA address translation support in the M4 remoteproc
+driver.
+
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-tda54-main.dtsi |  2 +-
+ drivers/remoteproc/ti_k3_m4_remoteproc.c  | 14 +++++++++++++-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-main.dtsi b/arch/arm64/boot/dts/ti/k3-tda54-main.dtsi
+index ef3e07957763..6652acec8ef2 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-tda54-main.dtsi
+@@ -401,7 +401,7 @@ main_bcdma: dma-controller@30100000 {
+ 	};
+ 
+ 	mcu_m55: m55@24000000 {
+-		compatible = "ti,am64-m4fss";
++		compatible = "ti,tda54-m55ss";
+ 		reg = <0x00 0x24000000 0x00 0xffff>,
+ 		      <0x00 0x24050000 0x00 0xffff>;
+ 		reg-names = "itcm", "btcm";
+diff --git a/drivers/remoteproc/ti_k3_m4_remoteproc.c b/drivers/remoteproc/ti_k3_m4_remoteproc.c
+index 261c4ca62f0e..fa77a3696b8f 100644
+--- a/drivers/remoteproc/ti_k3_m4_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_m4_remoteproc.c
+@@ -94,11 +94,11 @@ static int k3_m4_rproc_probe(struct platform_device *pdev)
+ 	ret = devm_add_action_or_reset(dev, k3_release_tsp, kproc->tsp);
+ 	if (ret)
+ 		return ret;
++#endif
+ 
+ 	ret = k3_rproc_of_get_memories(pdev, kproc);
+ 	if (ret)
+ 		return ret;
+-#endif
+ 
+ 	ret = k3_reserved_mem_init(kproc);
+ 	if (ret)
+@@ -140,6 +140,10 @@ static const struct k3_rproc_mem_data am64_m4_mems[] = {
+ 	{ .name = "dram", .dev_addr = 0x30000 },
+ };
+ 
++static const struct k3_rproc_mem_data tda54_m55_mems[] = {
++	{ .name = "itcm", .dev_addr = 0x0 },
++};
++
+ static const struct k3_rproc_dev_data am64_m4_data = {
+ 	.mems = am64_m4_mems,
+ 	.num_mems = ARRAY_SIZE(am64_m4_mems),
+@@ -147,8 +151,16 @@ static const struct k3_rproc_dev_data am64_m4_data = {
+ 	.uses_lreset = true,
+ };
+ 
++static const struct k3_rproc_dev_data tda54_m55_data = {
++	.mems = tda54_m55_mems,
++	.num_mems = ARRAY_SIZE(tda54_m55_mems),
++	.boot_align_addr = SZ_1K,
++	.uses_lreset = true,
++};
++
+ static const struct of_device_id k3_m4_of_match[] = {
+ 	{ .compatible = "ti,am64-m4fss", .data = &am64_m4_data, },
++	{ .compatible = "ti,tda54-m55ss", .data = &tda54_m55_data, },
+ 	{ /* sentinel */ },
+ };
+ MODULE_DEVICE_TABLE(of, k3_m4_of_match);
+-- 
+2.34.1
+
