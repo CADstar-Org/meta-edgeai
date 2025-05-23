@@ -21,7 +21,7 @@ PLAT_SFX:j742s2 = "j742s2"
 PLAT_SFX:am62axx = "am62a"
 PLAT_SFX:tda54 = "tda54"
 
-SRCREV = "f0120292a406aa0d43b2f9ac6ff6675bbca1ddc4"
+SRCREV = "ca5608612099088c7ca9de2c9d85d87cd9f306c6"
 BRANCH = "tda54_presil"
 
 SRC_URI = " \
@@ -201,7 +201,9 @@ ALTERNATIVE:${PN}:j722s = "\
 
 ALTERNATIVE:${PN}:tda54 = "\
                     tda54-main-m55_0-fw   \
+                    tda54-main-m55_0-fw-sec   \
                     tda54-c76_0-fw        \
+                    tda54-c76_0-fw-sec        \
                     "
 
 ALTERNATIVE:${PN}:am62axx = "\
@@ -292,6 +294,8 @@ ALTERNATIVE_LINK_NAME[j722s-c71_1-fw] = "${nonarch_base_libdir}/firmware/j722s-c
 
 ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw"
 ALTERNATIVE_LINK_NAME[tda54-c76_0-fw] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw-sec"
+ALTERNATIVE_LINK_NAME[tda54-c76_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw-sec"
 
 ALTERNATIVE_LINK_NAME[j722s-main-r5f0_0-fw-sec] = "${nonarch_base_libdir}/firmware/j722s-main-r5f0_0-fw-sec"
 ALTERNATIVE_LINK_NAME[j722s-c71_0-fw-sec] = "${nonarch_base_libdir}/firmware/j722s-c71_0-fw-sec"
@@ -383,6 +387,8 @@ ALTERNATIVE_TARGET[j722s-c71_1-fw] = "${INSTALL_FW_DIR}/${C7X_2_FW}"
 
 ALTERNATIVE_TARGET[tda54-main-m55_0-fw] = "${INSTALL_FW_DIR}/${MCU0_FW}"
 ALTERNATIVE_TARGET[tda54-c76_0-fw] = "${INSTALL_FW_DIR}/${C7X_1_FW}"
+ALTERNATIVE_TARGET[tda54-main-m55_0-fw-sec] = "${INSTALL_FW_DIR}/${MCU0_FW}.signed"
+ALTERNATIVE_TARGET[tda54-c76_0-fw-sec] = "${INSTALL_FW_DIR}/${C7X_1_FW}.signed"
 
 ALTERNATIVE_TARGET[j722s-main-r5f0_0-fw-sec] = "${INSTALL_FW_DIR}/${MCU_2_0_FW}.signed"
 ALTERNATIVE_TARGET[j722s-c71_0-fw-sec] = "${INSTALL_FW_DIR}/${C7X_1_FW}.signed"
