@@ -1,4 +1,4 @@
-From cd42b8f9dd315aa213130d4a8559d30fc252efa0 Mon Sep 17 00:00:00 2001
+From aa38676ed4355fbbd181d27ba9c813b3fba6b227 Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
 Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
@@ -10,7 +10,7 @@ Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
  1 file changed, 33 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index 28b4051d1954..d72c29f32c46 100644
+index 28b4051d1954..4485ca4fd78c 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -75,9 +75,9 @@ index 28b4051d1954..d72c29f32c46 100644
 +            reg = <0x00 0xe0000000 0x00 0x1c000000>;
 +        };
 +
-+        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@880000000 {
++        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@2080000000 {
 +            compatible = "shared-dma-pool";
-+            reg = <0x08 0x80000000 0x00 0x80000000>;
++            reg = <0x20 0x80000000 0x00 0x80000000>;
 +            no-map;
 +        };
 +
