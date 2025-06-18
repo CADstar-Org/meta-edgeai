@@ -6,9 +6,9 @@ LICENSE = "TI-TFL"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=dc68ab0305d85e56491b9a9aed2309f2"
 
 PV = "1.0.0"
-BRANCH = "main"
+BRANCH = "tda54_presil"
 SRC_URI = "git://github.com/TexasInstruments/edgeai-tiovx-apps.git;branch=${BRANCH};protocol=https"
-SRCREV = "d9958735a492c7281f3dc4508fa21386e611b31d"
+SRCREV = "ca6c656700d4016fd43a57379690b6a5a0b811d7"
 
 PLAT_SOC = ""
 PLAT_SOC:j721e = "j721e"
