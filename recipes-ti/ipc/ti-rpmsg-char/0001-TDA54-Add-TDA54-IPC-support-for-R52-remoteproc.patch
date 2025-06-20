@@ -1,0 +1,41 @@
+From 7bcb55687435924bc6002d6b1767514707eaa2b8 Mon Sep 17 00:00:00 2001
+From: Beleswar Padhi <b-padhi@ti.com>
+Date: Thu, 19 Jun 2025 15:23:06 +0530
+Subject: [PATCH] TDA54: Add TDA54 IPC support for R52 remoteproc
+
+Add the entry for R52 remote proc to support IPC testing from the
+rpmsg_char_simple userspace application.
+
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+---
+ include/rproc_id.h | 1 +
+ src/soc.c          | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/include/rproc_id.h b/include/rproc_id.h
+index f67a2ce..7b43c09 100644
+--- a/include/rproc_id.h
++++ b/include/rproc_id.h
+@@ -73,6 +73,7 @@ enum rproc_id {
+ 	R5F_WKUP0_0 = 15,
+ 	M55_MAIN_0 = 16,
+ 	DSP_C76_0 = 17,
++	R52_MCU0_0 = 18,
+ 	RPROC_ID_MAX,
+ };
+ 
+diff --git a/src/soc.c b/src/soc.c
+index 48c1cdd..4e388bf 100644
+--- a/src/soc.c
++++ b/src/soc.c
+@@ -147,6 +147,7 @@ const struct rproc_map j722s_map[] = {
+ const struct rproc_map tda54_map[] = {
+ 	{ .id = M55_MAIN_0, .rproc_name = "24000000.m55", },
+ 	{ .id = DSP_C76_0, .rproc_name = "64000000.c76", },
++	{ .id = R52_MCU0_0, .rproc_name = "23000000.r52", },
+ };
+ 
+ const struct soc_data socs[NUM_SOC_FAMILY] = {
+-- 
+2.34.1
+

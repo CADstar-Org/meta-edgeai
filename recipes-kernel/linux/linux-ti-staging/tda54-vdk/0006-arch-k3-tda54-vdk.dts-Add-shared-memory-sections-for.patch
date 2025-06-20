@@ -1,16 +1,16 @@
-From aa38676ed4355fbbd181d27ba9c813b3fba6b227 Mon Sep 17 00:00:00 2001
+From fe05940b56552c4e22f228babd3e438c0b567d72 Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
-Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
- apps
+Subject: [PATCH 6/6] arch/k3-tda54-vdk.dts: Add shared memory sections for
+ vision apps
 
 Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
 ---
- arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 43 +++++++++++++++++++------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 45 +++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 11 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index 28b4051d1954..4485ca4fd78c 100644
+index 696547d117e1..8e5bcb3719f7 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -22,22 +22,11 @@ index 28b4051d1954..4485ca4fd78c 100644
   */
  
  /dts-v1/;
-@@ -32,30 +32,53 @@ reserved_memory: reserved-memory {
- 		#size-cells = <2>;
- 		ranges;
+@@ -40,34 +40,57 @@ mcu_m55_dma_memory_region: mcu-m55-dma-memory@a1000000 {
  
--		mcu_m55_dma_memory_region: mcu-m55-dma-memory@91000000 {
-+		mcu_m55_dma_memory_region: mcu-m55-dma-memory@a1000000 {
+ 		mcu_m55_memory_region: mcu-m55-memory@a1100000 {
  			compatible = "shared-dma-pool";
--			reg = <0x00 0x91000000 0x00 0x100000>;
-+			reg = <0x00 0xa1000000 0x00 0x100000>;
- 			no-map;
- 		};
- 
--		mcu_m55_memory_region: mcu-m55-memory@91100000 {
-+		mcu_m55_memory_region: mcu-m55-memory@a1100000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0x91100000 0x00 0xf00000>;
+-			reg = <0x00 0xa1100000 0x00 0xf00000>;
 +			reg = <0x00 0xa1100000 0x00 0x01f00000>;
  			no-map;
  		};
@@ -58,6 +47,22 @@ index 28b4051d1954..4485ca4fd78c 100644
  			no-map;
  		};
  
+-		mcu_r52ss0_core0_dma_memory_region: r52-memory@a6000000 {
++		mcu_r52ss0_core0_dma_memory_region: r52-memory@a7000000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0xa6000000 0x00 0x100000>;
++			reg = <0x00 0xa7000000 0x00 0x100000>;
+ 			no-map;
+ 		};
+ 
+-		mcu_r52ss0_core0_memory_region: r52-memory@a6100000 {
++		mcu_r52ss0_core0_memory_region: r52-memory@a7100000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0xa6100000 0x00 0xf00000>;
++			reg = <0x00 0xa7100000 0x00 0xf00000>;
+ 			no-map;
+ 		};
+ 
 +        vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bb200000 {
 +            compatible = "shared-dma-pool";
 +            reg = <0x00 0xbb200000 0x00 0x03000000>;
@@ -75,16 +80,16 @@ index 28b4051d1954..4485ca4fd78c 100644
 +            reg = <0x00 0xe0000000 0x00 0x1c000000>;
 +        };
 +
-+        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@2080000000 {
++        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@c1000000 {
 +            compatible = "shared-dma-pool";
-+            reg = <0x20 0x80000000 0x00 0x80000000>;
++            reg = <0x00 0xc1000000 0x00 0x1f000000>;
 +            no-map;
 +        };
 +
  		secure_ddr: optee@9e800000 {
  			reg = <0x00 0x9e800000 0x00 0x01800000>;
  			no-map;
-@@ -86,7 +109,7 @@ virtio_gpu@53100000 {
+@@ -98,7 +121,7 @@ virtio_gpu@53100000 {
  	mcc {
  	        compatible="arm,vexpress,config-bus";
  	        arm,vexpress,config-bridge=<&sysreg>;

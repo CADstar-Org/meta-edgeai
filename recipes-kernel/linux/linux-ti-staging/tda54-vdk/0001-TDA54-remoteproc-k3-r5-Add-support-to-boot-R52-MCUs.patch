@@ -1,0 +1,152 @@
+From fd4620a7a903d4ad1a3df6930e2210fc070e47ef Mon Sep 17 00:00:00 2001
+From: Beleswar Padhi <b-padhi@ti.com>
+Date: Thu, 19 Jun 2025 16:28:28 +0530
+Subject: [PATCH 1/6] TDA54: remoteproc: k3-r5: Add support to boot R52+ MCUs
+
+Add support to boot R52+ MCUs for TDA54 VDK platform:
+   - Protect ti_sci calls in configs as DM is not up yet
+   - Hardcode to boot in IPC-only mode for now.
+
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+---
+ drivers/remoteproc/ti_k3_r5_remoteproc.c | 36 ++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/remoteproc/ti_k3_r5_remoteproc.c b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+index b2170b023023..3d473de4d074 100644
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -1354,7 +1354,7 @@ static int k3_r5_reserved_mem_init(struct k3_r5_rproc *kproc)
+  * supported SoCs. The Core0 TCM sizes therefore have to be adjusted to only
+  * half the original size in Split mode.
+  */
+-static void k3_r5_adjust_tcm_sizes(struct k3_r5_rproc *kproc)
++static void __maybe_unused k3_r5_adjust_tcm_sizes(struct k3_r5_rproc *kproc)
+ {
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+ 	struct k3_r5_core *core = kproc->core;
+@@ -1393,14 +1393,18 @@ static void k3_r5_adjust_tcm_sizes(struct k3_r5_rproc *kproc)
+  * actual values configured by bootloader. The driver internal device memory
+  * addresses for TCMs are also updated.
+  */
+-static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
++static int __maybe_unused k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
+ {
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+ 	struct k3_r5_core *core = kproc->core;
+ 	struct device *cdev = core->dev;
+-	bool r_state = false, c_state = false, lockstep_en = false, single_cpu = false;
+-	u32 ctrl = 0, cfg = 0, stat = 0, halted = 0;
++	bool c_state = false;
++	u32 halted = 0;
++#ifdef CONFIG_TDA54_IS_TI_SCI
++	bool r_state = false, lockstep_en = false, single_cpu = false;
++	u32 ctrl = 0, cfg = 0, stat = 0;
+ 	u64 boot_vec = 0;
++#endif
+ 	u32 atcm_enable, btcm_enable, loczrama;
+ 	struct k3_r5_core *core0;
+ 	enum cluster_mode mode = cluster->mode;
+@@ -1409,6 +1413,7 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
+ 
+ 	core0 = list_first_entry(&cluster->cores, struct k3_r5_core, elem);
+ 
++#ifdef CONFIG_TDA54_IS_TI_SCI
+ 	ret = core->ti_sci->ops.dev_ops.is_on(core->ti_sci, core->ti_sci_id,
+ 					      &r_state, &c_state);
+ 	if (ret) {
+@@ -1453,7 +1458,12 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
+ 		mode = CLUSTER_MODE_LOCKSTEP;
+ 
+ 	halted = ctrl & PROC_BOOT_CTRL_FLAG_R5_CORE_HALT;
++#endif
+ 
++	/* Hardcode to boot in IPC-Only mode for now */
++	c_state = true;
++	reset_ctrl_status = false;
++	halted = false;
+ 	/*
+ 	 * IPC-only mode detection requires both local and module resets to
+ 	 * be deasserted and R5F core to be unhalted. Local reset status is
+@@ -1494,8 +1504,10 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
+ 		core->atcm_enable = atcm_enable;
+ 		core->btcm_enable = btcm_enable;
+ 		core->loczrama = loczrama;
++#ifdef CONFIG_TDA54_IS_TI_SCI
+ 		core->mem[0].dev_addr = loczrama ? 0 : K3_R5_TCM_DEV_ADDR;
+ 		core->mem[1].dev_addr = loczrama ? K3_R5_TCM_DEV_ADDR : 0;
++#endif
+ 	}
+ 
+ 	return ret;
+@@ -1555,16 +1567,20 @@ static int k3_r5_cluster_rproc_init(struct platform_device *pdev)
+ 		if (ret)
+ 			goto init_rmem;
+ 
++#ifdef CONFIG_TDA54_IS_TI_SCI
+ 		ret = k3_r5_rproc_configure(kproc);
+ 		if (ret) {
+ 			dev_err(dev, "initial configure failed, ret = %d\n",
+ 				ret);
+ 			goto out;
+ 		}
++#endif
+ 
+ 		init_completion(&kproc->shut_comp);
+ init_rmem:
++#ifdef CONFIG_TDA54_IS_TI_SCI
+ 		k3_r5_adjust_tcm_sizes(kproc);
++#endif
+ 
+ 		ret = k3_r5_reserved_mem_init(kproc);
+ 		if (ret) {
+@@ -1647,8 +1663,8 @@ static void k3_r5_cluster_rproc_exit(void *data)
+ 	}
+ }
+ 
+-static int k3_r5_core_of_get_internal_memories(struct platform_device *pdev,
+-					       struct k3_r5_core *core)
++static int __maybe_unused k3_r5_core_of_get_internal_memories(struct platform_device *pdev,
++							      struct k3_r5_core *core)
+ {
+ 	static const char * const mem_names[] = {"atcm", "btcm"};
+ 	struct device *dev = &pdev->dev;
+@@ -1719,8 +1735,8 @@ static int k3_r5_core_of_get_internal_memories(struct platform_device *pdev,
+ 	return 0;
+ }
+ 
+-static int k3_r5_core_of_get_sram_memories(struct platform_device *pdev,
+-					   struct k3_r5_core *core)
++static int __maybe_unused k3_r5_core_of_get_sram_memories(struct platform_device *pdev,
++							  struct k3_r5_core *core)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct device *dev = &pdev->dev;
+@@ -1776,7 +1792,7 @@ static int k3_r5_core_of_get_sram_memories(struct platform_device *pdev,
+ 	return 0;
+ }
+ 
+-static void k3_r5_release_tsp(void *data)
++static void __maybe_unused k3_r5_release_tsp(void *data)
+ {
+ 	struct ti_sci_proc *tsp = data;
+ 
+@@ -1828,6 +1844,7 @@ static int k3_r5_core_of_init(struct platform_device *pdev)
+ 		goto err;
+ 	}
+ 
++#ifdef CONFIG_TDA54_IS_TI_SCI
+ 	core->ti_sci = devm_ti_sci_get_by_phandle(dev, "ti,sci");
+ 	if (IS_ERR(core->ti_sci)) {
+ 		ret = PTR_ERR(core->ti_sci);
+@@ -1887,6 +1904,7 @@ static int k3_r5_core_of_init(struct platform_device *pdev)
+ 	ret = devm_add_action_or_reset(dev, k3_r5_release_tsp, core->tsp);
+ 	if (ret)
+ 		goto err;
++#endif
+ 
+ 	platform_set_drvdata(pdev, core);
+ 	devres_close_group(dev, k3_r5_core_of_init);
+-- 
+2.34.1
+

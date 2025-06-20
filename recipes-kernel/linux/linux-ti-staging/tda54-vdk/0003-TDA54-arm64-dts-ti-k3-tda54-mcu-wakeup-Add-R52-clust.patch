@@ -1,0 +1,66 @@
+From fcf3258876a409d9f191ac77c66b374bd5e410a6 Mon Sep 17 00:00:00 2001
+From: Beleswar Padhi <b-padhi@ti.com>
+Date: Thu, 19 Jun 2025 16:43:51 +0530
+Subject: [PATCH 3/6] TDA54: arm64: dts: ti: k3-tda54-mcu-wakeup: Add R52+
+ cluster node
+
+Add the R52+ remote processor cluster node for TDA54 VDK in the MCU
+domain. The R52+ is a dual-core cluster which is configured for LockStep
+mode for the moment, and each of the cores have a dedicated ATCM, BTCM
+and CTCM internal memory regions. Keep them disabled by default.
+
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+---
+ .../boot/dts/ti/k3-tda54-mcu-wakeup.dtsi      | 37 +++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-tda54-mcu-wakeup.dtsi
+index d5b652f9b044..f02f23922498 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54-mcu-wakeup.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-tda54-mcu-wakeup.dtsi
+@@ -125,5 +125,42 @@ mcu_spi9: spi@53790000 {
+ 		clocks = <&clk_mcspi>;
+ 		status = "disabled";
+ 	};
++
++	mcu_r52ss0: r52ss@23000000 {
++                compatible = "ti,j721s2-r5fss";
++                ti,cluster-mode = <1>;
++                #address-cells = <1>;
++                #size-cells = <1>;
++		status = "disabled";
++                ranges = <0x23000000 0x00 0x23000000 0x6fffd>,
++                         <0x23100000 0x00 0x23100000 0x6fffd>;
++
++                mcu_r52ss0_core0: r52@23000000 {
++                        compatible = "ti,j721s2-r5f";
++                        reg = <0x23000000 0x0001ffff>,
++                              <0x23040000 0x0003ffff>,
++                              <0x23080000 0x0000ffff>;
++                        reg-names = "atcm", "btcm", "ctcm";
++                        firmware-name = "tda54-mcu-r52_0_0-fw";
++                        ti,atcm-enable = <1>;
++                        ti,btcm-enable = <1>;
++                        ti,loczrama = <1>;
++			status = "disabled";
++                };
++
++                mcu_r52ss0_core1: r52@23100000 {
++                        compatible = "ti,j721s2-r5f";
++                        reg = <0x23100000 0x0001ffff>,
++                              <0x23140000 0x0003ffff>,
++                              <0x23180000 0x0000ffff>;
++                        reg-names = "atcm", "btcm", "ctcm";
++                        firmware-name = "tda54-mcu-r52_0_1-fw";
++                        ti,atcm-enable = <1>;
++                        ti,btcm-enable = <1>;
++                        ti,loczrama = <1>;
++			status = "disabled";
++                };
++        };
++
+ };
+ 
+-- 
+2.34.1
+

@@ -1,0 +1,40 @@
+From 6298e9b7bb53074b99408e0a908140d914976e7e Mon Sep 17 00:00:00 2001
+From: Beleswar Padhi <b-padhi@ti.com>
+Date: Thu, 19 Jun 2025 16:44:48 +0530
+Subject: [PATCH 4/6] TDA54: arm64: dts: ti: k3-tda54: Add R52+ Cluster ranges
+
+Add R52+ Cluster reg ranges in cbass_mcu_wakeup and cbass_main nodes
+
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-tda54.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54.dtsi b/arch/arm64/boot/dts/ti/k3-tda54.dtsi
+index 617990795c38..9436e5fc3db2 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-tda54.dtsi
+@@ -320,14 +320,18 @@ cbass_main: bus@100000 {
+ 		         <0x00 0x64000000 0x00 0x64000000 0x00 0x002fffff>, /* C76_0 */
+ 
+ 		         /* MCUSS_WKUP Range */
++			 <0x00 0x23000000 0x00 0x23000000 0x00 0x0006fffd>, /* MCU R52SS Core 0 */
++			 <0x00 0x23100000 0x00 0x23100000 0x00 0x0006fffd>, /* MCU R52SS Core 1 */
+ 		         <0x00 0x53700000 0x00 0x53700000 0x00 0x00090200>,
+ 		         <0x00 0x53900000 0x00 0x53900000 0x00 0x00001000>;
+ 
+-		cbass_mcu_wakeup: bus@53000000 {
++		cbass_mcu_wakeup: bus@23000000 {
+ 			compatible = "simple-bus";
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+-			ranges = <0x00 0x53700000 0x00 0x53700000 0x00 0x00090200>, /* McSPI0-9 */
++			ranges = <0x00 0x23000000 0x00 0x23000000 0x00 0x0006fffd>, /* MCU R52SS Core 0 */
++				 <0x00 0x23100000 0x00 0x23100000 0x00 0x0006fffd>, /* MCU R52SS Core 1 */
++				 <0x00 0x53700000 0x00 0x53700000 0x00 0x00090200>, /* McSPI0-9 */
+ 			         <0x00 0x53900000 0x00 0x53900000 0x00 0x00001000>; /* SNPS UART */
+ 		};
+ 	};
+-- 
+2.34.1
+

@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1f7721ee7d288457c5a70d0c8ff44b87"
 
 PV = "1.0.0"
 BRANCH = "tda54_presil"
-SRC_URI = "git://git.ti.com/git/edgeai/edgeai-tiovx-kernels.git;branch=${BRANCH};protocol=https"
+SRC_URI = "git://git@bitbucket.itg.ti.com/processor-sdk-vision/edgeai-tiovx-kernels.git;branch=${BRANCH};protocol=ssh"
 SRCREV = "8d83209afc6c8c8460b30a0edcff8a35e31da0b5"
 
 PLAT_SOC = ""
