@@ -74,7 +74,7 @@ FW_LIST:j721s2 =    "              ${MCU_1_1_FW} ${MCU_2_0_FW} ${MCU_2_1_FW} ${M
 FW_LIST:j784s4 =    "              ${MCU_1_1_FW} ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW}                         ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW} ${C7X_4_FW}"
 FW_LIST:j742s2 =    "                            ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW}                         ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW}"
 FW_LIST:j722s =     "                            ${MCU_2_0_FW}                                                                                               ${C7X_1_FW} ${C7X_2_FW}"
-FW_LIST:tda54 =     "              ${MCU0_FW} ${C7X_1_FW}"
+FW_LIST:tda54 =     "              ${MCU0_FW} ${C7X_1_FW} ${RMCU_0_0_FW}"
 FW_LIST:am62axx =   "${MCU_1_0_FW}                                                                                                                           ${C7X_1_FW}"
 
 do_install() {
@@ -204,6 +204,8 @@ ALTERNATIVE:${PN}:tda54 = "\
                     tda54-main-m55_0-fw-sec   \
                     tda54-c76_0-fw        \
                     tda54-c76_0-fw-sec        \
+                    tda54-mcu-r52_0_0-fw    \
+                    tda54-mcu-r52_0_0-fw-sec \
                     "
 
 ALTERNATIVE:${PN}:am62axx = "\
@@ -294,8 +296,10 @@ ALTERNATIVE_LINK_NAME[j722s-c71_1-fw] = "${nonarch_base_libdir}/firmware/j722s-c
 
 ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw"
 ALTERNATIVE_LINK_NAME[tda54-c76_0-fw] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw"
+ALTERNATIVE_LINK_NAME[tda54-mcu-r52_0_0-fw] = "${nonarch_base_libdir}/firmware/tda54-mcu-r52_0_0-fw"
 ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw-sec"
 ALTERNATIVE_LINK_NAME[tda54-c76_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw-sec"
+ALTERNATIVE_LINK_NAME[tda54-mcu-r52_0_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-mcu-r52_0_0-fw-sec"
 
 ALTERNATIVE_LINK_NAME[j722s-main-r5f0_0-fw-sec] = "${nonarch_base_libdir}/firmware/j722s-main-r5f0_0-fw-sec"
 ALTERNATIVE_LINK_NAME[j722s-c71_0-fw-sec] = "${nonarch_base_libdir}/firmware/j722s-c71_0-fw-sec"
@@ -387,8 +391,10 @@ ALTERNATIVE_TARGET[j722s-c71_1-fw] = "${INSTALL_FW_DIR}/${C7X_2_FW}"
 
 ALTERNATIVE_TARGET[tda54-main-m55_0-fw] = "${INSTALL_FW_DIR}/${MCU0_FW}"
 ALTERNATIVE_TARGET[tda54-c76_0-fw] = "${INSTALL_FW_DIR}/${C7X_1_FW}"
+ALTERNATIVE_TARGET[tda54-mcu-r52_0_0-fw] = "${INSTALL_FW_DIR}/${RMCU_0_0_FW}"
 ALTERNATIVE_TARGET[tda54-main-m55_0-fw-sec] = "${INSTALL_FW_DIR}/${MCU0_FW}.signed"
 ALTERNATIVE_TARGET[tda54-c76_0-fw-sec] = "${INSTALL_FW_DIR}/${C7X_1_FW}.signed"
+ALTERNATIVE_TARGET[tda54-mcu-r52_0_0-fw-sec] = "${INSTALL_FW_DIR}/${RMCU_0_0_FW}.signed"
 
 ALTERNATIVE_TARGET[j722s-main-r5f0_0-fw-sec] = "${INSTALL_FW_DIR}/${MCU_2_0_FW}.signed"
 ALTERNATIVE_TARGET[j722s-c71_0-fw-sec] = "${INSTALL_FW_DIR}/${C7X_1_FW}.signed"
