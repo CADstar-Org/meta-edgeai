@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1f7721ee7d288457c5a70d0c8ff44b87"
 PV = "1.0.0"
 BRANCH = "tda54_presil"
 SRC_URI = "git://git@bitbucket.itg.ti.com/processor-sdk-vision/edgeai-apps-utils.git;protocol=ssh;branch=${BRANCH}"
-SRCREV = "2b88396e5d846379f31f1f94b59844db04ebf36c"
+SRCREV = "d97f65fb30c2db52fc37668047d3fb918142d92a"
 
 PLAT_SOC = ""
 PLAT_SOC:j721e = "j721e"
