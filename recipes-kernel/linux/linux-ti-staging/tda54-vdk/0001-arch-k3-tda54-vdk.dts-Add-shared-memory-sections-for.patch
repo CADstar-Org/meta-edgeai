@@ -1,4 +1,4 @@
-From 91b33ef79ed0eb2809d36a71d421288b55c98cc9 Mon Sep 17 00:00:00 2001
+From 8e3dbdbf457d8c1ab4225480ed54808e3d9fd422 Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
 Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
@@ -10,7 +10,7 @@ Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
  1 file changed, 34 insertions(+), 11 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index a5106f3e805c..7a5110960c91 100644
+index 69fccd0d34ec..2d86715d864e 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -77,19 +77,19 @@ index a5106f3e805c..7a5110960c91 100644
 +
 +        vision_apps_shared_region: vision_apps_shared-memories {
 +            compatible = "dma-heap-carveout";
-+            reg = <0x00 0xe0000000 0x00 0x1c000000>;
++            reg = <0x00 0xc0000000 0x00 0x1c000000>;
 +        };
 +
-+        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@c1000000 {
++        c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@e0000000 {
 +            compatible = "shared-dma-pool";
-+            reg = <0x00 0xc1000000 0x00 0x1f000000>;
++            reg = <0x00 0xe0000000 0x00 0x20000000>;
 +            no-map;
 +        };
 +
  		secure_ddr: optee@9e800000 {
  			reg = <0x00 0x9e800000 0x00 0x01800000>;
  			no-map;
-@@ -98,7 +121,7 @@ virtio_gpu@53100000 {
+@@ -98,7 +121,7 @@ gpu1: virtio_gpu@53100000 {
  	mcc {
  	        compatible="arm,vexpress,config-bus";
  	        arm,vexpress,config-bridge=<&sysreg>;
