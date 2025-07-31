@@ -110,6 +110,14 @@ do_deploy:am62axx() {
     cp ${D}${INSTALL_FW_DIR}${MCU_1_0_FW}.signed ${DEPLOYDIR}/ti-dm/am62axx/ipc_echo_testb_mcu1_0_release_strip.xer5f.signed
 }
 
+do_deploy:tda54() {
+    install -d ${DEPLOYDIR}/ti-vision-apps
+    for FW_NAME in ${FW_LIST}
+    do
+        cp ${D}${INSTALL_FW_DIR}${FW_NAME} ${DEPLOYDIR}/ti-vision-apps/${FW_NAME}
+    done
+}
+
 # Set up names for the firmwares
 ALTERNATIVE:${PN}:j721e = "\
                     j7-mcu-r5f0_1-fw \
