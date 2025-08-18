@@ -26,7 +26,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
 
 inherit deploy
 
-SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/heads/tda54_presil;manifest=vision_apps_yocto.xml"
+SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.01.01.03;manifest=vision_apps_yocto.xml"
 
 FILES:${PN} += "/opt/*"
 
