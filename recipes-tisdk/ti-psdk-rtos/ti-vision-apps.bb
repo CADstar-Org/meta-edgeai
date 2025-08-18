@@ -24,8 +24,6 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COREBASE}/meta/files/common-licenses/OpenSSL;md5=4eb1764f3e65fafa1a25057f9082f2ae \
                     "
 
-inherit deploy
-
 SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.01.01.03;manifest=vision_apps_yocto.xml"
 
 FILES:${PN} += "/opt/*"
@@ -73,14 +71,4 @@ do_install() {
     SOC=${PLAT_SOC} LINUX_FS_STAGE_PATH=${D} oe_runmake yocto_install
 }
 
-do_deploy() {
-}
-
-do_deploy:tda54() {
-    install -d ${DEPLOYDIR}/ti-vision-apps
-    cp ${D}${libdir}/* ${DEPLOYDIR}/ti-vision-apps/
-}
-
 INSANE_SKIP:${PN} += "ldflags"
-
-addtask deploy after do_install
