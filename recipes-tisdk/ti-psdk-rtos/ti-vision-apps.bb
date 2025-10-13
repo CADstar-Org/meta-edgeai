@@ -3,7 +3,7 @@ DESCRIPTION = "Builds tivision_apps user space library"
 
 PR:append = "_edgeai_11"
 
-PV = "11.1.1"
+PV = "11.2.0"
 
 LICENSE = "TI-TFL & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause & MIT & Apache-2.0 & Apache-2.0-with-LLVM-exception & \
            Khronos & Hewlett-Packard & Patrick-Powell & FTL & Zlib & CC0-1.0 & OpenSSL"
@@ -24,7 +24,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COREBASE}/meta/files/common-licenses/OpenSSL;md5=4eb1764f3e65fafa1a25057f9082f2ae \
                     "
 
-SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.01.01.03;manifest=vision_apps_yocto.xml"
+SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.00.01;manifest=vision_apps_yocto.xml"
 
 FILES:${PN} += "/opt/*"
 
