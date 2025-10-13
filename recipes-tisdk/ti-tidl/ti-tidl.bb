@@ -11,14 +11,14 @@ LICENSE = "MIT"
 PV="1.0.0"
 
 SRCREV_FORMAT="default"
-SRCREV_arm-tidl="38a2f55ed3b8b11e1e25359f724b75320f26f003"
-SRCREV_concerto="707b11afdbe5d0abb109a42b06828ba70f555bff"
+SRCREV_arm-tidl="f058135a50bdf912ebccb270f14f03c3eca9f776"
+SRCREV_concerto="252e6a8b8bae660a140d10025590e813d9c3da84"
 SRCREV_onnxruntime="f145bec7bee26b9dfa43b3e07645ee1a5f8b8140"
 SRCREV_tensorflow="422156a973b23bab6b86176a245a66193dccb995"
 
 SRC_URI = " \
-    git://git.ti.com/git/processor-sdk-vision/arm-tidl.git;branch=master;protocol=https;name=arm-tidl;destsuffix=git/arm-tidl \
-    git://git.ti.com/git/processor-sdk/concerto.git;branch=main;protocol=https;name=concerto;destsuffix=git/concerto \
+    git://git@bitbucket.itg.ti.com/processor-sdk-vision/arm-tidl.git;branch=tda54_presil;protocol=ssh;name=arm-tidl;destsuffix=git/arm-tidl \
+    git://git@bitbucket.itg.ti.com/processor-sdk-vision/concerto.git;branch=tda54_presil;protocol=ssh;name=concerto;destsuffix=git/concerto \
     git://github.com/TexasInstruments/onnxruntime;branch=tidl-1.15;protocol=https;name=onnxruntime;destsuffix=git/onnxruntime  \
     git://github.com/TexasInstruments/tensorflow;branch=tidl-j7-2.12;protocol=https;name=tensorflow;destsuffix=git/tensorflow  \
     https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.tar.gz;name=protobuf;subdir=git/protobuf-3.21.12 \
@@ -42,6 +42,7 @@ PLAT_SOC:tda54 = "tda54"
 CPU = "A72"
 CPU:am62axx = "A53"
 CPU:j722s = "A53"
+CPU:tda54 = "A720"
 
 DEPENDS += "ti-vision-apps"
 
