@@ -24,6 +24,7 @@ SRC_URI:append:j722s = " \
 
 SRC_URI:append:tda54 = " \
     file://0001-arch-k3-tda54-vdk.dts-Add-shared-memory-sections-for.patch \
+    file://0002-TDA54-arch-arm64-k3-tda54.dtsi-fix-typo-in-cbass_mai.patch \
 "
 
-PR:append = "_edgeai_8"
+PR:append = "_edgeai_9"

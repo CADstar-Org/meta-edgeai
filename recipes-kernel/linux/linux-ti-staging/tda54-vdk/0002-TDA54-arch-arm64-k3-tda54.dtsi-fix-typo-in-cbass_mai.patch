@@ -1,0 +1,29 @@
+From fea3ccf210ac3a067e4b90d5bd46f2cba60d4608 Mon Sep 17 00:00:00 2001
+From: Shreyash Sinha <s-sinha@ti.com>
+Date: Tue, 4 Nov 2025 14:24:43 +0530
+Subject: [PATCH 2/2] TDA54: arch: arm64: k3-tda54.dtsi: fix typo in cbass_main
+ dt_node
+
+Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-tda54.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54.dtsi b/arch/arm64/boot/dts/ti/k3-tda54.dtsi
+index 78d426d0e824..59999b4e45a6 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-tda54.dtsi
+@@ -370,8 +370,8 @@ cbass_main: bus@100000 {
+ 			<0x00 0x30004000 0x00 0x30004000 0x00 0x04131FFF>, /* NAVSS */
+ 			<0x00 0x38000000 0x00 0x38000000 0x00 0x00800000>, /* SMMU */
+ 			<0x00 0x458e0000 0x00 0x458e0000 0x00 0x02860143>, /* NAVSS */
+-			<0x00 0x51800000 0x00 0x51800000 0x00 0x00120000>, /* DSS /
+-			<0x00 0x64000000 0x00 0x64000000 0x00 0x002fffff>, /* C76_0 */
++			<0x00 0x51800000 0x00 0x51800000 0x00 0x00120000>, /* DSS */
++            <0x00 0x64000000 0x00 0x64000000 0x00 0x002fffff>, /* C76_0 */
+ 			<0x4e 0x20000000 0x4e 0x20000000 0x00 0x000fffff>, /* GPU */
+ 
+ 			/* MCUSS_WKUP Range */
+-- 
+2.34.1
+
