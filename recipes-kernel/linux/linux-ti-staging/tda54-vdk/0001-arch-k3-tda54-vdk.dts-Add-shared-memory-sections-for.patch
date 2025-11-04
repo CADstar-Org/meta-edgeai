@@ -1,16 +1,16 @@
-From 8e3dbdbf457d8c1ab4225480ed54808e3d9fd422 Mon Sep 17 00:00:00 2001
+From f6993efb9db008779bcb820f7e641f3cf2d9ab5e Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
-Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
- apps
+Subject: [PATCH 1/2] arch/k3-tda54-vdk.dts: Add shared memory sections for
+ vision apps
 
 Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
 ---
- arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 45 +++++++++++++++++++------
- 1 file changed, 34 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 48 +++++++++++++++++++------
+ 1 file changed, 37 insertions(+), 11 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index 69fccd0d34ec..2d86715d864e 100644
+index 91ed2e487c3e..d298c78f63ac 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -98,6 +98,13 @@ index 69fccd0d34ec..2d86715d864e 100644
  	        reset{
  	                compatible="arm,vexpress-reset";
  	                arm,vexpress-sysreg,func=<5 0>;
+@@ -178,3 +201,6 @@ &wkup_gpio0 {
+ 	status = "okay";
+ };
+ 
++&dss {
++	status = "disabled";
++};
 -- 
 2.34.1
 
