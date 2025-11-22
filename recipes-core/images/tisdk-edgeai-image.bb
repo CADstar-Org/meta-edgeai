@@ -55,7 +55,6 @@ IMAGE_INSTALL:remove = "\
 
 IMAGE_INSTALL:append = " \
     resize-rootfs \
-    busybox-init-scripts \
 "
 
 WKS_FILE = "tisdk-edgeai-sdimage.wks"
