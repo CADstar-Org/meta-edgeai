@@ -1,16 +1,16 @@
-From f6993efb9db008779bcb820f7e641f3cf2d9ab5e Mon Sep 17 00:00:00 2001
+From e31986f11ed9ad8bc95d83ef4ad1dd30132fdf4f Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
-Subject: [PATCH 1/2] arch/k3-tda54-vdk.dts: Add shared memory sections for
- vision apps
+Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
+ apps
 
 Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
 ---
- arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 48 +++++++++++++++++++------
- 1 file changed, 37 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 47 ++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 12 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index 91ed2e487c3e..d298c78f63ac 100644
+index ae7161d67bc2..a79907382db8 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -22,7 +22,7 @@ index 91ed2e487c3e..d298c78f63ac 100644
   */
  
  /dts-v1/;
-@@ -40,34 +40,57 @@ mcu_m55_dma_memory_region: mcu-m55-dma-memory@a1000000 {
+@@ -61,34 +61,57 @@ mcu_m55_dma_memory_region: mcu-m55-dma-memory@a1000000 {
  
  		mcu_m55_memory_region: mcu-m55-memory@a1100000 {
  			compatible = "shared-dma-pool";
@@ -89,7 +89,7 @@ index 91ed2e487c3e..d298c78f63ac 100644
  		secure_ddr: optee@9e800000 {
  			reg = <0x00 0x9e800000 0x00 0x01800000>;
  			no-map;
-@@ -98,7 +121,7 @@ gpu1: virtio_gpu@53100000 {
+@@ -119,7 +142,7 @@ gpu1: virtio_gpu@53100000 {
  	mcc {
  	        compatible="arm,vexpress,config-bus";
  	        arm,vexpress,config-bridge=<&sysreg>;
@@ -98,13 +98,15 @@ index 91ed2e487c3e..d298c78f63ac 100644
  	        reset{
  	                compatible="arm,vexpress-reset";
  	                arm,vexpress-sysreg,func=<5 0>;
-@@ -178,3 +201,6 @@ &wkup_gpio0 {
- 	status = "okay";
+@@ -250,7 +273,7 @@ &main_sdhci1 {
  };
  
-+&dss {
+ &dss {
+-	status = "okay";
 +	status = "disabled";
-+};
+ };
+ 
+ &dss_ports {
 -- 
 2.34.1
 
