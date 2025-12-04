@@ -1,0 +1,31 @@
+From cda842c539ac1bfe9f122c2656d90022b5084ede Mon Sep 17 00:00:00 2001
+From: Shreyash Sinha <s-sinha@ti.com>
+Date: Mon, 8 Dec 2025 22:23:37 +0530
+Subject: [PATCH 2/2] Revert "HACK: TDA54: arm64: dts: ti: k3-tda54-vdk:
+ Specify base address for CMA"
+
+This reverts commit 08050f0e281fd7edfc7230c94ed4408fb25f56c6.
+---
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+index 8b2012c3d420..d49a0d8570aa 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
++++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+@@ -45,11 +45,10 @@ reserved_memory: reserved-memory {
+ 		ranges;
+ 
+ 		/* global cma region */
+-		linux,cma@c0000000 {
++		linux,cma {
+ 			compatible = "shared-dma-pool";
+ 			reusable;
+ 			size = <0x00 0x20000000>;
+-			alloc-ranges = <0x00 0xc0000000 0x00 0x20000000>;
+ 			linux,cma-default;
+ 		};
+ 
+-- 
+2.34.1
+

@@ -24,6 +24,7 @@ SRC_URI:append:j722s = " \
 
 SRC_URI:append:tda54 = " \
     file://0001-arch-k3-tda54-vdk.dts-Add-shared-memory-sections-for.patch \
+    file://0002-Revert-HACK-TDA54-arm64-dts-ti-k3-tda54-vdk-Specify-.patch \
 "
 
 PR:append = "_edgeai_8"
