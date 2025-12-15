@@ -1,16 +1,16 @@
-From 9472b697b2893be6440a2688ccc77f154c6fc646 Mon Sep 17 00:00:00 2001
+From a019f885178e7dc2228dca02d01a544e4d344259 Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
-Subject: [PATCH 1/2] arch/k3-tda54-vdk.dts: Add shared memory sections for
- vision apps
+Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
+ apps
 
 Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
 ---
- arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 61 ++++++++++++++++++-------
- 1 file changed, 45 insertions(+), 16 deletions(-)
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 43 +++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index 56c64513c255..8b2012c3d420 100644
+index 7c9dcf7d0203..2e73e1e98447 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 @@ -2,7 +2,7 @@
@@ -22,78 +22,41 @@ index 56c64513c255..8b2012c3d420 100644
   */
  
  /dts-v1/;
-@@ -61,43 +61,72 @@ mcu_m55_dma_memory_region: mcu-m55-dma-memory@a1000000 {
- 
- 		mcu_m55_memory_region: mcu-m55-memory@a1100000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0xa1100000 0x00 0xf00000>;
-+			reg = <0x00 0xa1100000 0x00 0x01f00000>;
-+			no-map;
-+		};
-+
-+		mcu_m55_1_dma_memory_region: mcu-m55-1-dma-memory@a3000000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xa3000000 0x00 0x100000>;
- 			no-map;
- 		};
- 
--		mcu_m55_1_dma_memory_region: mcu-m55-1-dma-memory@a2000000 {
-+		mcu_m55_1_memory_region: mcu-m55-1-memory@a3100000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0xa2000000 0x00 0x100000>;
-+			reg = <0x00 0xa3100000 0x00 0x01f00000>;
- 			no-map;
- 		};
- 
--		mcu_m55_1_memory_region: mcu-m55-1-memory@a2100000 {
-+		c76_dma_memory_region: c76-dma-memory@ae000000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0xa2100000 0x00 0xf00000>;
-+			reg = <0x00 0xae000000 0x00 0x100000>;
- 			no-map;
- 		};
- 
--		c76_dma_memory_region: c76-dma-memory@ac000000 {
-+		c76_memory_region: c76-memory@ae1000000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0xac000000 0x00 0x100000>;
-+			reg = <0x00 0xae100000 0x00 0x01f00000>;
- 			no-map;
- 		};
- 
--		c76_memory_region: c76-memory@ac1000000 {
-+		mcu_r52ss0_core0_dma_memory_region: r52-memory@a8000000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0xac100000 0x00 0xf00000>;
-+			reg = <0x00 0xa8000000 0x00 0x100000>;
+@@ -89,15 +89,44 @@ c76_memory_region: c76-memory@b1100000 {
  			no-map;
  		};
  
 -		mcu_r52ss0_core0_dma_memory_region: r52-memory@a6000000 {
-+		mcu_r52ss0_core0_memory_region: r52-memory@a8100000 {
++		mcu_r52ss0_core0_dma_memory_region: r52-memory@ab000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xab000000 0x00 0x100000>;
++			no-map;
++		};
++
++		mcu_r52ss0_core0_memory_region: r52-memory@ab100000 {
  			compatible = "shared-dma-pool";
 -			reg = <0x00 0xa6000000 0x00 0x100000>;
-+			reg = <0x00 0xa8100000 0x00 0xf00000>;
++			reg = <0x00 0xab100000 0x00 0xf00000>;
  			no-map;
  		};
  
 -		mcu_r52ss0_core0_memory_region: r52-memory@a6100000 {
-+		vision_apps_core_heaps_lo: vision-apps-core-heap-memory-lo@b6000000 {
++		vision_apps_core_heaps_lo: vision-apps-core-heap-memory-lo@b9000000 {
  			compatible = "shared-dma-pool";
 -			reg = <0x00 0xa6100000 0x00 0xf00000>;
-+			reg = <0x00 0xb6000000 0x00 0x06200000>;
++			reg = <0x00 0xb9000000 0x00 0x02400000>;
 +			no-map;
 +		};
 +
-+		vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bc200000 {
++		vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bb400000 {
 +			compatible = "shared-dma-pool";
-+			reg = <0x00 0xbc200000 0x00 0x03000000>;
++			reg = <0x00 0xbb400000 0x00 0x03000000>;
 +			no-map;
 +		};
 +
-+		vision_apps_memory_region: vision-apps-dma-memory@bf200000 {
++		vision_apps_memory_region: vision-apps-dma-memory@be400000 {
 +			compatible = "shared-dma-pool";
-+			reg = <0x00 0xbf200000 0x00 0x01280000>;
++			reg = <0x00 0xbe400000 0x00 0x01280000>;
 +			no-map;
 +		};
 +
