@@ -1,5 +1,11 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
+SRCREV_uboot = "53c0dc988c4e9e9c1ed2fd2bfbf65d73ed467413"
+
+UBOOT_GIT_URI = "git://git@bitbucket.itg.ti.com/~a0501904/ti-u-boot.git"
+
+UBOOT_GIT_PROTOCOL = "ssh"
+
 SRC_URI:append:j721e = " \
     file://0001-Optimal-QoS-Settings.patch \
     file://0001-arch-arm-dts-k3-j721e-Update-memory-map-for-PSDK-RTO.patch \
