@@ -24,7 +24,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COREBASE}/meta/files/common-licenses/OpenSSL;md5=4eb1764f3e65fafa1a25057f9082f2ae \
                     "
 
-SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.01.01;manifest=vision_apps_yocto.xml"
+SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.01.02;manifest=vision_apps_yocto.xml"
 
 FILES:${PN} += "/opt/*"
 
