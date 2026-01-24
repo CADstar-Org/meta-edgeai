@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1f7721ee7d288457c5a70d0c8ff44b87"
 PV = "1.0.0"
 BRANCH = "tda54_presil"
 SRC_URI = "git://git@bitbucket.itg.ti.com/processor-sdk-vision/edgeai-tiovx-kernels.git;branch=${BRANCH};protocol=ssh"
-SRCREV = "253c296d115ad8d7129e8c3d1769175aafcc08a2"
+SRCREV = "bdd135bdf35cedd95267c8a7a373eaab75f692de"
 
 PLAT_SOC = ""
 PLAT_SOC:j721e = "j721e"
