@@ -1,7 +1,7 @@
 SUMMARY = "OpenVX Middleware library"
 DESCRIPTION = "Builds tivision_apps user space library"
 
-PR:append = "_edgeai_11"
+PR:append = "_edgeai_12"
 
 PV = "11.2.1"
 
@@ -24,7 +24,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COREBASE}/meta/files/common-licenses/OpenSSL;md5=4eb1764f3e65fafa1a25057f9082f2ae \
                     "
 
-SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.01.02;manifest=vision_apps_yocto.xml"
+SRC_URI = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.01.03;manifest=vision_apps_yocto.xml"
 
 FILES:${PN} += "/opt/*"
 
