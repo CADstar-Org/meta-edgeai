@@ -21,7 +21,7 @@ PLAT_SFX:j742s2 = "j742s2"
 PLAT_SFX:am62axx = "am62a"
 PLAT_SFX:tda54 = "tda54"
 
-SRCREV = "455732198b1adc1866b39ef78edcf5ebdf27aee7"
+SRCREV = "e6594dc0dc9a0afd215e9803d3e3b13b134c8861"
 BRANCH = "tda54_presil"
 
 SRC_URI = " \
