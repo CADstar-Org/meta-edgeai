@@ -1,3 +1,11 @@
+TI_LINUX_FW_GIT_URI = "git://git@bitbucket.itg.ti.com/~a0501904/ti-linux-firmware.git"
+
+TI_LINUX_FW_GIT_PROTOCOL = "ssh"
+
+SRCREV = "8ec0c42b8ccf2c9e8bebfd7c4e03d93fed555442"
+
+C7X_1_FW:am62axx = "dsp_adas_c7x_1_release_strip.out"
+
 IPC_FW_LIST:j721e =   "              ${MCU_2_0_FW} ${MCU_2_1_FW} ${C66_1_FW} ${C66_2_FW} ${C7X_1_FW}"
 IPC_FW_LIST:j721s2 =  "              ${MCU_2_0_FW} ${MCU_2_1_FW} ${C7X_1_FW} ${C7X_2_FW}"
 IPC_FW_LIST:j784s4 =  "              ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW} ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW} ${C7X_4_FW}"
@@ -191,4 +199,4 @@ ALTERNATIVE_TARGET[j742s2-c71_2-fw-sec] = "${INSTALL_IPC_FW_DIR}/${C7X_3_FW}.sig
 
 ALTERNATIVE_PRIORITY = "10"
 
-PR:append = "_edgeai_0"
+PR:append = "_edgeai_1"
