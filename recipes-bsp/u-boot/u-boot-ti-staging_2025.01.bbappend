@@ -6,6 +6,8 @@ UBOOT_GIT_URI = "git://git@bitbucket.itg.ti.com/~a0501904/ti-u-boot.git"
 
 UBOOT_GIT_PROTOCOL = "ssh"
 
+DM_FIRMWARE:am62axx = "dm_adas_mcu1_0_release_strip.out"
+
 SRC_URI:append:j721e = " \
     file://0001-Optimal-QoS-Settings.patch \
     file://0001-arch-arm-dts-k3-j721e-Update-memory-map-for-PSDK-RTO.patch \
