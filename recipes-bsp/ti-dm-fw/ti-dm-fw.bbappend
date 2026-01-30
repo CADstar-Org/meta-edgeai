@@ -4,6 +4,6 @@ TI_LINUX_FW_GIT_PROTOCOL = "ssh"
 
 DM_FIRMWARE:am62axx = "dm_adas_mcu1_0_release_strip.out"
 
-SRCREV = "8ec0c42b8ccf2c9e8bebfd7c4e03d93fed555442"
+SRCREV = "ee31dd0ff9def6c8b15a84d5f769e4851e1a2f4f"
 
 PR:append = "_edgeai_0"
