@@ -37,7 +37,7 @@ RDEPENDS:${PN} += " \
      python3-attrs \
 "
 
-COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
+COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx|tda54"
 
 inherit python3-dir
 

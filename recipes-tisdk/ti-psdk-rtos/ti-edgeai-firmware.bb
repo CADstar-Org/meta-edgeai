@@ -3,7 +3,7 @@ SUMMARY = "TI RTOS prebuilt binary firmware images for EdgeAI"
 LICENSE = "TI-TFL"
 LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md5=a1b59cb7ba626b9dbbcbf00f3fbc438a"
 
-COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2"
+COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx|tda54"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -18,6 +18,7 @@ PLAT_SFX:j721s2 = "j721s2"
 PLAT_SFX:j784s4 = "j784s4"
 PLAT_SFX:j722s = "j722s"
 PLAT_SFX:j742s2 = "j742s2"
+PLAT_SFX:tda54 = "tda54"
 
 SRCREV = "579af7d6c4b0172d4824faf16972adbdcd13902b"
 BRANCH = "main"

@@ -4,7 +4,7 @@ SUMMARY = "Arago based TI SDK full filesystem image intended for ADAS"
 
 DESCRIPTION = "Complete Arago TI SDK filesystem image containing Advanced Driver-Assistance Systems stack intended for TI Analytics processors."
 
-COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
+COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx|tda54"
 
 ADAS_STACK = " \
         ti-vision-apps-dev \
@@ -16,6 +16,11 @@ ADAS_STACK = " \
         edgeai-tidl-models \
         ti-adas-firmware \
         ti-tidl-osrt-staticdev \
+"
+ADAS_STACK:remove:tda54 = " \
+        edgeai-test-data \
+        edgeai-tidl-models \
+        ti-tidl-dev \
 "
 
 ADAS_STACK:remove:am62axx = " \
