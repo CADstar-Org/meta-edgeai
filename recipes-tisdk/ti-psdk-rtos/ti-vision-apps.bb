@@ -3,7 +3,7 @@ DESCRIPTION = "Builds tivision_apps user space library"
 
 PR:append = "_edgeai_15"
 
-PV = "11.02.03"
+PV = "11.2.1"
 
 LICENSE = "TI-TFL & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause & MIT & Apache-2.0 & Apache-2.0-with-LLVM-exception & \
            Khronos & Hewlett-Packard & Patrick-Powell & FTL & Zlib & CC0-1.0 & OpenSSL"
@@ -27,6 +27,10 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
 SRC_URI = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.11.02.00.06;manifest=vision_apps_yocto.xml"
 SRC_URI:am62axx = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.AM62A.11.02.00.03;manifest=vision_apps_yocto_am62a.xml"
 SRC_URI:edgeai = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.NONSAFETY.11.01.00.03;manifest=vision_apps_yocto_nonsafety.xml"
+SRC_URI:tda54   = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.01.03;manifest=vision_apps_yocto.xml"
+
+inherit deploy
+
 FILES:${PN} += "/opt/*"
 
 #PTK needs:
@@ -72,4 +76,14 @@ do_install() {
     SOC=${PLAT_SOC} LINUX_FS_STAGE_PATH=${D} oe_runmake yocto_install
 }
 
+do_deploy() {
+}
+
+do_deploy:tda54() {
+    install -d ${DEPLOYDIR}/ti-vision-apps
+    cp ${D}${libdir}/* ${DEPLOYDIR}/ti-vision-apps/
+}
+
 INSANE_SKIP:${PN} += "ldflags buildpaths"
+
+addtask deploy after do_install

@@ -77,6 +77,14 @@ do_install() {
 do_deploy() {
 }
 
+do_deploy:tda54() {
+    install -d ${DEPLOYDIR}/ti-vision-apps
+    for FW_NAME in ${FW_LIST}
+    do
+        cp ${D}${INSTALL_FW_DIR}${FW_NAME} ${DEPLOYDIR}/ti-vision-apps/${FW_NAME}
+    done
+}
+
 # Set up names for the firmwares
 ALTERNATIVE:${PN}:j721e = "\
                     j7-main-r5f0_0-fw \
