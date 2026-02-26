@@ -1,0 +1,94 @@
+From 6fc3b3fe61ad719c687402edab6acfbd931c679e Mon Sep 17 00:00:00 2001
+From: Shreyash Sinha <s-sinha@ti.com>
+Date: Tue, 15 Apr 2025 22:31:59 +0530
+Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
+ apps
+
+Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 43 +++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 7 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+index 2d709f63a1a0..5e85f27221f7 100644
+--- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
++++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (C) 2025 Texas Instruments Incorporated - https://www.ti.com/
+  *
+- * 
++ *
+  */
+ 
+ /dts-v1/;
+@@ -88,15 +88,44 @@ c76_memory_region: c76-memory@b1100000 {
+ 			no-map;
+ 		};
+ 
+-		mcu_r52ss0_core0_dma_memory_region: r52-memory@a6000000 {
++		mcu_r52ss0_core0_dma_memory_region: r52-memory@ab000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xab000000 0x00 0x100000>;
++			no-map;
++		};
++
++		mcu_r52ss0_core0_memory_region: r52-memory@ab100000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0xa6000000 0x00 0x100000>;
++			reg = <0x00 0xab100000 0x00 0xf00000>;
+ 			no-map;
+ 		};
+ 
+-		mcu_r52ss0_core0_memory_region: r52-memory@a6100000 {
++		vision_apps_core_heaps_lo: vision-apps-core-heap-memory-lo@b9000000 {
+ 			compatible = "shared-dma-pool";
+-			reg = <0x00 0xa6100000 0x00 0xf00000>;
++			reg = <0x00 0xb9000000 0x00 0x02400000>;
++			no-map;
++		};
++
++		vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bb400000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xbb400000 0x00 0x03000000>;
++			no-map;
++		};
++
++		vision_apps_memory_region: vision-apps-dma-memory@be400000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xbe400000 0x00 0x01280000>;
++			no-map;
++		};
++
++		vision_apps_shared_region: vision_apps_shared-memories {
++			compatible = "dma-heap-carveout";
++			reg = <0x00 0xc0000000 0x00 0x1c000000>;
++		};
++
++		c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@e0000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xe0000000 0x00 0x20000000>;
+ 			no-map;
+ 		};
+ 
+@@ -130,7 +159,7 @@ gpu1: virtio_gpu@53100000 {
+ 	mcc {
+ 	        compatible="arm,vexpress,config-bus";
+ 	        arm,vexpress,config-bridge=<&sysreg>;
+-	
++
+ 	        reset{
+ 	                compatible="arm,vexpress-reset";
+ 	                arm,vexpress-sysreg,func=<5 0>;
+@@ -282,7 +311,7 @@ &main_sdhci1 {
+ };
+ 
+ &dss {
+-	status = "okay";
++    status = "disabled";
+ };
+ 
+ &dss_ports {
+-- 
+2.34.1
+

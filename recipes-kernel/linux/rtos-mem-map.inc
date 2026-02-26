@@ -20,4 +20,8 @@ SRC_URI:append:j722s = " \
     file://0001-arm64-dts-ti-j722s-Add-DTB-overlay-for-RTOS-memory-m.patch \
 "
 
+SRC_URI:append:tda54 = " \
+    file://0001-arch-k3-tda54-vdk.dts-Add-shared-memory-sections-for.patch \
+"
+
 PR:append = "_edgeai_8"
