@@ -4,23 +4,22 @@ DESCRIPTION = "TIDL Runtime Modules like TIDL-RT, TF-LITE Delegate Library and O
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-S = "${WORKDIR}/git"
 PR:append = "_edgeai_2"
-PV="1.0.0"
+PV = "1.0.0"
 
-SRCREV_FORMAT="default"
-SRCREV_arm-tidl="81fefa6907b933230f7ef62710a5e9440487f628"
-SRCREV_concerto="f5541b85b9973ca47680d1a6d970bf61a126daa8"
-SRCREV_onnxruntime="5816ccce5bb4b9b8ce1869bdda397257a8d2028a"
-SRCREV_tensorflow="422156a973b23bab6b86176a245a66193dccb995"
-SRCREV_protobuf="f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c"
+SRCREV_FORMAT = "default"
+SRCREV_arm-tidl = "81fefa6907b933230f7ef62710a5e9440487f628"
+SRCREV_concerto = "f5541b85b9973ca47680d1a6d970bf61a126daa8"
+SRCREV_onnxruntime = "5816ccce5bb4b9b8ce1869bdda397257a8d2028a"
+SRCREV_tensorflow = "422156a973b23bab6b86176a245a66193dccb995"
+SRCREV_protobuf = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c"
 
 SRC_URI = " \
-    git://git.ti.com/git/processor-sdk-vision/arm-tidl.git;branch=master;protocol=https;name=arm-tidl;destsuffix=git/arm-tidl \
-    git://git.ti.com/git/processor-sdk/concerto.git;branch=main;protocol=https;name=concerto;destsuffix=git/concerto \
-    git://github.com/TexasInstruments/onnxruntime;branch=tidl-1.15;protocol=https;name=onnxruntime;destsuffix=git/onnxruntime  \
-    git://github.com/TexasInstruments/tensorflow;branch=tidl-j7-2.12;protocol=https;name=tensorflow;destsuffix=git/tensorflow  \
-    git://github.com/protocolbuffers/protobuf;branch=main;protocol=https;name=protobuf;destsuffix=git/protobuf \
+    git://git.ti.com/git/processor-sdk-vision/arm-tidl.git;branch=master;protocol=https;name=arm-tidl;destsuffix=${S}/arm-tidl \
+    git://git.ti.com/git/processor-sdk/concerto.git;branch=main;protocol=https;name=concerto;destsuffix=${S}/concerto \
+    git://github.com/TexasInstruments/onnxruntime;branch=tidl-1.15;protocol=https;name=onnxruntime;destsuffix=${S}/onnxruntime  \
+    git://github.com/TexasInstruments/tensorflow;branch=tidl-j7-2.12;protocol=https;name=tensorflow;destsuffix=${S}/tensorflow  \
+    git://github.com/protocolbuffers/protobuf;branch=main;protocol=https;name=protobuf;destsuffix=${S}/protobuf \
 "
 
 PLAT_SOC = ""
@@ -48,9 +47,9 @@ FILES:${PN} += "${includedir}/*"
 EXTRA_OEMAKE += "-C ${S}/arm-tidl"
 
 do_compile() {
-    ln -snf ${TARGET_FS} ${WORKDIR}/targetfs
+    ln -snf ${TARGET_FS} ${UNPACKDIR}/targetfs
 
-    PSDK_INSTALL_PATH=${WORKDIR} \
+    PSDK_INSTALL_PATH=${UNPACKDIR} \
     IVISION_PATH=${TARGET_FS}${includedir}/processor_sdk/ivision \
     VISION_APPS_PATH=${TARGET_FS}${includedir}/processor_sdk/vision_apps \
     APP_UTILS_PATH=${TARGET_FS}${includedir}/processor_sdk/app_utils \
@@ -68,9 +67,9 @@ do_compile() {
     oe_runmake
 }
 
-LIB_DST_DIR="${D}${libdir}"
-INC_DST_DIR="${D}${includedir}"
-OPT_DST_DIR="${D}/opt"
+LIB_DST_DIR = "${D}${libdir}"
+INC_DST_DIR = "${D}${includedir}"
+OPT_DST_DIR = "${D}/opt"
 
 TIDL_SOC_NAME = ""
 TIDL_SOC_NAME:j721e = "J721E"
