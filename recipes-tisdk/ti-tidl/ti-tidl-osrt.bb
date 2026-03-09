@@ -39,6 +39,14 @@ RDEPENDS:${PN} += " \
 
 COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
 
+PLAT_SOC = ""
+PLAT_SOC:j721e = "j721e"
+PLAT_SOC:j721s2 = "j721s2"
+PLAT_SOC:j784s4 = "j784s4"
+PLAT_SOC:j722s = "j722s"
+PLAT_SOC:j742s2 = "j742s2"
+PLAT_SOC:am62axx = "am62a"
+
 inherit python3-dir
 
 FILES:${PN}-staticdev += "${libdir}/tflite_2.12/"
@@ -50,12 +58,19 @@ FILES:${PN} += "${includedir}"
 
 INSANE_SKIP:${PN} += "already-stripped"
 
+# Skip warnings about unused source files for am62a platform
+INSANE_SKIP:${PN}:append:am62axx = " installed-vs-shipped"
+
 do_install() {
     install -d ${D}${PYTHON_SITEPACKAGES_DIR}
     unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tflite/tflite_runtime-2.12.0-cp312-cp312-linux_aarch64.whl
     unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/ort/onnxruntime_tidl-1.15.0-cp312-cp312-linux_aarch64.whl
-    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tidlrt/tidlruntime-0.1.0-cp312-cp312-linux_aarch64.whl
-    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tvm/tvm-0.18.0-cp312-cp312-linux_aarch64.whl
+    
+    # Skip tidlruntime and tvm for am62axx platform
+    if [ "${PLAT_SOC}" != "am62a" ]; then
+        unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tidlrt/tidlruntime-0.1.0-cp312-cp312-linux_aarch64.whl
+        unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tvm/tvm-0.18.0-cp312-cp312-linux_aarch64.whl
+    fi
 
     install -d ${D}${includedir}
     install -d ${D}${libdir}
@@ -69,14 +84,17 @@ do_install() {
     rm -rf  ${S}/ort_lib/onnxruntime/csharp
     cp -r  ${S}/ort_lib/onnxruntime ${D}${includedir}/
 
-    ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tidlruntime/include ${D}${includedir}/tidlruntime
-    ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tidlruntime/lib/libtidlruntime.a ${D}${libdir}/libtidlruntime.a
+    # Skip tidlruntime and tvm for am62axx platform
+    if [ "${PLAT_SOC}" != "am62a" ]; then
+        ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tidlruntime/include ${D}${includedir}/tidlruntime
+        ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tidlruntime/lib/libtidlruntime.a ${D}${libdir}/libtidlruntime.a
 
-    install -d ${D}${includedir}/tvm/tvm
-    ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tvm/libtvm.so ${D}${libdir}/libtvm.so
-    ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tvm/libtvm_runtime.so ${D}${libdir}/libtvm_runtime.so
-    cd ${D}${PYTHON_SITEPACKAGES_DIR}/tvm/
-    cp --parents $(find . -name "*.h*") ${D}${includedir}/tvm/tvm
-    cd -
+        install -d ${D}${includedir}/tvm/tvm
+        ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tvm/libtvm.so ${D}${libdir}/libtvm.so
+        ln -s -r ${D}${PYTHON_SITEPACKAGES_DIR}/tvm/libtvm_runtime.so ${D}${libdir}/libtvm_runtime.so
+        cd ${D}${PYTHON_SITEPACKAGES_DIR}/tvm/
+        cp --parents $(find . -name "*.h*") ${D}${includedir}/tvm/tvm
+        cd -
+    fi
 }
 
