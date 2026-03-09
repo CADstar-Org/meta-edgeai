@@ -13,7 +13,6 @@ ADAS_STACK = " \
         edgeai-tiovx-kernels-source \
         edgeai-apps-utils-source \
         edgeai-test-data \
-        edgeai-tidl-models \
         ti-adas-firmware \
         ti-tidl-osrt-staticdev \
 "
