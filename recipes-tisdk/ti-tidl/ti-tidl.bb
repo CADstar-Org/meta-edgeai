@@ -9,11 +9,15 @@ PR:append = "_edgeai_2"
 PV="1.0.0"
 
 SRCREV_FORMAT="default"
-SRCREV_arm-tidl="81fefa6907b933230f7ef62710a5e9440487f628"
 SRCREV_concerto="f5541b85b9973ca47680d1a6d970bf61a126daa8"
 SRCREV_onnxruntime="5816ccce5bb4b9b8ce1869bdda397257a8d2028a"
 SRCREV_tensorflow="422156a973b23bab6b86176a245a66193dccb995"
 SRCREV_protobuf="f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c"
+
+SRCREV_arm-tidl = "81fefa6907b933230f7ef62710a5e9440487f628"
+
+# Overwrite arm-tidl commit for am62a as it is latched to REL.TIDL.11.01.10.00
+SRCREV_arm-tidl:am62axx = "2951a2e1ca5e714638fd2537242539d3228ec083"
 
 SRC_URI = " \
     git://git.ti.com/git/processor-sdk-vision/arm-tidl.git;branch=master;protocol=https;name=arm-tidl;destsuffix=git/arm-tidl \
@@ -88,13 +92,22 @@ do_install() {
     ln -s -r ${LIB_DST_DIR}/libtidl_tfl_delegate.so.1.0 ${LIB_DST_DIR}/libtidl_tfl_delegate.so
     cp ${S}/arm-tidl/onnxrt_ep/out/${TIDL_SOC_NAME}/${CPU}/LINUX/release/libtidl_onnxrt_EP.so.1.0 ${LIB_DST_DIR}/
     ln -s -r ${LIB_DST_DIR}/libtidl_onnxrt_EP.so.1.0 ${LIB_DST_DIR}/libtidl_onnxrt_EP.so
-    cp ${S}/arm-tidl/tidlrt_ep/out/${TIDL_SOC_NAME}/${CPU}/LINUX/release/libtidlrt_EP.so.1.0 ${LIB_DST_DIR}/
-    ln -s -r ${LIB_DST_DIR}/libtidlrt_EP.so.1.0 ${LIB_DST_DIR}/libtidlrt_EP.so
+    
+    # Only copy and softlink libtidlrt_EP if platform is NOT am62a
+    # since libtidlrt_EP was introduced in REL.TIDL.11.02.04.00
+    # while am62a is latched to REL.TIDL.11.01.10.00
+    if [ "${PLAT_SOC}" != "am62a" ]; then
+        cp ${S}/arm-tidl/tidlrt_ep/out/${TIDL_SOC_NAME}/${CPU}/LINUX/release/libtidlrt_EP.so.1.0 ${LIB_DST_DIR}/
+        ln -s -r ${LIB_DST_DIR}/libtidlrt_EP.so.1.0 ${LIB_DST_DIR}/libtidlrt_EP.so
+    fi
 
     install -d ${INC_DST_DIR}
     cp ${S}/arm-tidl/rt/inc/itidl_rt.h  ${INC_DST_DIR}/
-    cp ${S}/arm-tidl/rt/inc/itidl_io.h  ${INC_DST_DIR}/
     cp ${S}/arm-tidl/rt/inc/itvm_rt.h ${INC_DST_DIR}/
+
+    if [ "${PLAT_SOC}" != "am62a" ]; then
+        cp ${S}/arm-tidl/rt/inc/itidl_io.h  ${INC_DST_DIR}/
+    fi
 
     install -d ${OPT_DST_DIR}/tidl_test
     cp ${S}/arm-tidl/rt/out/${TIDL_SOC_NAME}/${CPU}/LINUX/release/TI_DEVICE_armv8_test_dl_algo_host_rt.out ${OPT_DST_DIR}/tidl_test/
