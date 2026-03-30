@@ -64,7 +64,6 @@ do_compile() {
     GCC_LINUX_ARM_ROOT_A72= \
     LINUX_FS_PATH=${STAGING_DIR_TARGET} \
     SOC=${PLAT_SOC} \
-    TISDK_IMAGE="adas" \
     oe_runmake yocto_build
 }
 
