@@ -2,7 +2,7 @@ TI_LINUX_FW_GIT_URI = "git://git@bitbucket.itg.ti.com/~a0501904/ti-linux-firmwar
 
 TI_LINUX_FW_GIT_PROTOCOL = "ssh"
 
-SRCREV = "c5d89b9ec344a422d7d7b3fa33badf75a14eede6"
+SRCREV = "ebb0e9f6cb0244dcf1c1ecfd79173f3073e5f420"
 
 C7X_1_FW:am62axx = "dsp_adas_c7x_1_release_strip.out"
 
