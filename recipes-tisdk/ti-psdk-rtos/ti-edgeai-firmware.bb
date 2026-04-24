@@ -20,7 +20,7 @@ PLAT_SFX:j722s = "j722s"
 PLAT_SFX:j742s2 = "j742s2"
 PLAT_SFX:tda54 = "tda54"
 
-SRCREV = "579af7d6c4b0172d4824faf16972adbdcd13902b"
+SRCREV = "f6826373684a05ce4cffcdc8f3ac47d54e734e05"
 BRANCH = "main"
 
 SRC_URI = " \
@@ -69,7 +69,7 @@ FW_LIST:j721s2 =    "              ${MCU_2_0_FW} ${MCU_2_1_FW} ${C7X_1_FW} ${C7X
 FW_LIST:j784s4 =    "              ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW}                         ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW} ${C7X_4_FW}"
 FW_LIST:j742s2 =    "                            ${MCU_2_0_FW} ${MCU_2_1_FW} ${MCU_3_0_FW} ${MCU_3_1_FW} ${MCU_4_0_FW} ${MCU_4_1_FW}                         ${C7X_1_FW} ${C7X_2_FW} ${C7X_3_FW}"
 FW_LIST:j722s =     "                            ${MCU_2_0_FW}                                                                                               ${C7X_1_FW} ${C7X_2_FW}"
-FW_LIST:tda54 =     "              ${MCU0_FW} ${MCU1_FW} ${C7X_1_FW} ${RMCU_0_0_FW}"
+FW_LIST:tda54 =     "              ${MCU0_FW} ${MCU1_FW} ${MCU2_FW} ${MCU3_FW} ${MCU4_FW} ${C7X_1_FW} ${RMCU_0_0_FW}"
 
 do_install() {
     # Sign the firmware
@@ -181,6 +181,12 @@ ALTERNATIVE:${PN}:tda54 = "\
                     tda54-main-m55_0-fw-sec   \
                     tda54-main-m55_1-fw   \
                     tda54-main-m55_1-fw-sec   \
+                    tda54-main-m55_2-fw   \
+                    tda54-main-m55_2-fw-sec   \
+                    tda54-main-m55_3-fw   \
+                    tda54-main-m55_3-fw-sec   \
+                    tda54-main-m55_4-fw   \
+                    tda54-main-m55_4-fw-sec   \
                     tda54-c76_0-fw        \
                     tda54-c76_0-fw-sec        \
                     tda54-mcu-r52_0_0-fw    \
@@ -264,10 +270,16 @@ ALTERNATIVE_LINK_NAME[j722s-c71_1-fw] = "${nonarch_base_libdir}/firmware/j722s-c
 
 ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw"
 ALTERNATIVE_LINK_NAME[tda54-main-m55_1-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_1-fw"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_2-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_2-fw"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_3-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_3-fw"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_4-fw] = "${nonarch_base_libdir}/firmware/tda54-main-m55_4-fw"
 ALTERNATIVE_LINK_NAME[tda54-c76_0-fw] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw"
 ALTERNATIVE_LINK_NAME[tda54-mcu-r52_0_0-fw] = "${nonarch_base_libdir}/firmware/tda54-mcu-r52_0_0-fw"
 ALTERNATIVE_LINK_NAME[tda54-main-m55_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_0-fw-sec"
 ALTERNATIVE_LINK_NAME[tda54-main-m55_1-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_1-fw-sec"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_2-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_2-fw-sec"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_3-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_3-fw-sec"
+ALTERNATIVE_LINK_NAME[tda54-main-m55_4-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-main-m55_4-fw-sec"
 ALTERNATIVE_LINK_NAME[tda54-c76_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-c76_0-fw-sec"
 ALTERNATIVE_LINK_NAME[tda54-mcu-r52_0_0-fw-sec] = "${nonarch_base_libdir}/firmware/tda54-mcu-r52_0_0-fw-sec"
 
@@ -347,10 +359,16 @@ ALTERNATIVE_TARGET[j722s-c71_1-fw] = "${INSTALL_FW_DIR}/${C7X_2_FW}"
 
 ALTERNATIVE_TARGET[tda54-main-m55_0-fw] = "${INSTALL_FW_DIR}/${MCU0_FW}"
 ALTERNATIVE_TARGET[tda54-main-m55_1-fw] = "${INSTALL_FW_DIR}/${MCU1_FW}"
+ALTERNATIVE_TARGET[tda54-main-m55_2-fw] = "${INSTALL_FW_DIR}/${MCU2_FW}"
+ALTERNATIVE_TARGET[tda54-main-m55_3-fw] = "${INSTALL_FW_DIR}/${MCU3_FW}"
+ALTERNATIVE_TARGET[tda54-main-m55_4-fw] = "${INSTALL_FW_DIR}/${MCU4_FW}"
 ALTERNATIVE_TARGET[tda54-c76_0-fw] = "${INSTALL_FW_DIR}/${C7X_1_FW}"
 ALTERNATIVE_TARGET[tda54-mcu-r52_0_0-fw] = "${INSTALL_FW_DIR}/${RMCU_0_0_FW}"
 ALTERNATIVE_TARGET[tda54-main-m55_0-fw-sec] = "${INSTALL_FW_DIR}/${MCU0_FW}.signed"
 ALTERNATIVE_TARGET[tda54-main-m55_1-fw-sec] = "${INSTALL_FW_DIR}/${MCU1_FW}.signed"
+ALTERNATIVE_TARGET[tda54-main-m55_2-fw-sec] = "${INSTALL_FW_DIR}/${MCU2_FW}.signed"
+ALTERNATIVE_TARGET[tda54-main-m55_3-fw-sec] = "${INSTALL_FW_DIR}/${MCU3_FW}.signed"
+ALTERNATIVE_TARGET[tda54-main-m55_4-fw-sec] = "${INSTALL_FW_DIR}/${MCU4_FW}.signed"
 ALTERNATIVE_TARGET[tda54-c76_0-fw-sec] = "${INSTALL_FW_DIR}/${C7X_1_FW}.signed"
 ALTERNATIVE_TARGET[tda54-mcu-r52_0_0-fw-sec] = "${INSTALL_FW_DIR}/${RMCU_0_0_FW}.signed"
 
