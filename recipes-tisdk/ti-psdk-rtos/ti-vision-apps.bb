@@ -27,7 +27,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
 SRC_URI = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.11.02.00.06;manifest=vision_apps_yocto.xml"
 SRC_URI:am62axx = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.AM62A.11.02.00.03;manifest=vision_apps_yocto_am62a.xml"
 SRC_URI:edgeai = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.NONSAFETY.11.01.00.03;manifest=vision_apps_yocto_nonsafety.xml"
-SRC_URI:tda54   = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.TDA54.11.02.01.03;manifest=vision_apps_yocto.xml"
+SRC_URI:tda54   = "repo://git@bitbucket.itg.ti.com/processor-sdk-vision/psdk_repo_manifests.git;protocol=ssh;branch=tda54_presil;manifest=vision_apps_yocto_tip.xml"
 
 inherit deploy
 
