@@ -1,0 +1,81 @@
+From 8b4ae9a066deb18c835e2ad1d952df2ba491e4db Mon Sep 17 00:00:00 2001
+From: Shreyash Sinha <s-sinha@ti.com>
+Date: Tue, 5 May 2026 18:59:38 +0530
+Subject: [PATCH 2/2] Revert "rpmsg_char: Remove unused function and local
+ variable"
+
+This reverts commit c95e09ab92015aaed91d6f0e74071207d07f14fb.
+
+Upstream-Status: Inappropriate [embedded specific]
+Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
+---
+ src/rpmsg_char.c          |  2 +-
+ src/rpmsg_char_internal.h |  3 ++-
+ src/utils.c               | 14 +++++++++++++-
+ 3 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/src/rpmsg_char.c b/src/rpmsg_char.c
+index 7d5a780..cbf176f 100644
+--- a/src/rpmsg_char.c
++++ b/src/rpmsg_char.c
+@@ -452,7 +452,7 @@ static int _rpmsg_char_open_eptdev(struct rpmsg_char_endpt *ept,
+ 				   char *eptdev_name, int flags)
+ {
+ 	char eptdev_path[32] = { 0 };
+-	int efd;
++	int efd, endpt;
+ 	int ret;
+ 
+ 	ret = _rpmsg_char_get_rpmsg_id(ept, eptdev_name);
+diff --git a/src/rpmsg_char_internal.h b/src/rpmsg_char_internal.h
+index 2dcd265..ef71506 100644
+--- a/src/rpmsg_char_internal.h
++++ b/src/rpmsg_char_internal.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2020-2026 Texas Instruments Incorporated - https://www.ti.com
++ * Copyright (c) 2020 Texas Instruments Incorporated - https://www.ti.com
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -60,6 +60,7 @@ int get_child_dir_pattern(char *fpath, const char *child_name_pattern,
+ 			 char *dir);
+ char *str_join(const char *fmt, ...);
+ int file_read_string(char *fpath, char *buf, int size);
++int file_read_value(char *fpath);
+ int check_dir(char *dirpath);
+ char *file_deref_link(char *fpath, char *link_name);
+ 
+diff --git a/src/utils.c b/src/utils.c
+index d9ec142..d752871 100644
+--- a/src/utils.c
++++ b/src/utils.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2020-2026 Texas Instruments Incorporated - https://www.ti.com
++ * Copyright (c) 2020 Texas Instruments Incorporated - https://www.ti.com
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -121,6 +121,18 @@ int file_read_string(char *fpath, char *buf, int size)
+ 	return bytes;
+ }
+ 
++int file_read_value(char *fpath)
++{
++	char buf[32];
++	int ret;
++
++	ret = file_read_string(fpath, buf, sizeof(buf));
++	if (ret < 0)
++		return ret;
++
++	return strtol(buf, NULL, 0);
++}
++
+ int check_dir(char *dirpath)
+ {
+ 	struct stat s;
+-- 
+2.34.1
+

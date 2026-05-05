@@ -1,0 +1,100 @@
+From cc94d9386b6057c9d1ecff1258a2989403e13bde Mon Sep 17 00:00:00 2001
+From: Shreyash Sinha <s-sinha@ti.com>
+Date: Tue, 5 May 2026 18:59:13 +0530
+Subject: [PATCH 1/2] Revert "lib: Do not update local endpoint"
+
+This reverts commit dd4783422bf4fbed1015bfaa51054e40057b4f04.
+
+Upstream-Status: Inappropriate [embedded specific]
+Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
+---
+ examples/rpmsg_char_simple.c |  3 ++-
+ src/Makefile.am              |  2 +-
+ src/rpmsg_char.c             | 32 +++++++++++++++++++++++++++++---
+ 3 files changed, 32 insertions(+), 5 deletions(-)
+
+diff --git a/examples/rpmsg_char_simple.c b/examples/rpmsg_char_simple.c
+index 4fba7ab..a0d4d24 100644
+--- a/examples/rpmsg_char_simple.c
++++ b/examples/rpmsg_char_simple.c
+@@ -114,7 +114,8 @@ int rpmsg_char_ping(int rproc_id, char *dev_name, unsigned int local_endpt, unsi
+ 		perror("Can't create an endpoint device");
+ 		return -EPERM;
+ 	}
+-	printf("Created endpt device %s, fd = %d\n", eptdev_name, rcdev->fd);
++	printf("Created endpt device %s, fd = %d port = %d\n", eptdev_name,
++		rcdev->fd, rcdev->endpt);
+ 
+ 	printf("Exchanging %d messages with rpmsg device %s on rproc id %d ...\n\n",
+ 		num_msgs, eptdev_name, rproc_id);
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 42cf471..0c3d5d1 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -8,4 +8,4 @@ libti_rpmsg_char_la_SOURCES = rpmsg_char.c soc.c utils.c
+ 
+ libti_rpmsg_char_la_CFLAGS = -I$(top_srcdir)/include
+ 
+-libti_rpmsg_char_la_LDFLAGS = -version-number 0:6:11 -no-undefined
++libti_rpmsg_char_la_LDFLAGS = -version-number 0:6:10 -no-undefined
+diff --git a/src/rpmsg_char.c b/src/rpmsg_char.c
+index e03e14d..7d5a780 100644
+--- a/src/rpmsg_char.c
++++ b/src/rpmsg_char.c
+@@ -361,9 +361,6 @@ static int _rpmsg_char_create_eptdev(struct rpmsg_char_endpt *ept,
+ 			strerror(errno));
+ 	}
+ 
+-	/* copy local port number to endpoint structure */
+-	ept->rcdev.endpt = local_port;
+-
+ 	close(fd);
+ 
+ 	return ret;
+@@ -431,6 +428,26 @@ static int _rpmsg_char_get_rpmsg_id(struct rpmsg_char_endpt *ept,
+ 	return found ? 0 : -1;
+ }
+ 
++static int _rpmsg_char_get_local_endpt(struct rpmsg_char_endpt *ept)
++{
++	char fpath[512] = { 0 };
++	char rpmsg[16] = { 0 };
++	char *rpath;
++
++	sprintf(rpmsg, "rpmsg%u", ept->rpmsg_id);
++	rpath = file_deref_link("/sys/class/rpmsg", rpmsg);
++	if (!rpath) {
++		fprintf(stderr, "%s: rpmsg%u realpath failed\n",
++			__func__, ept->rpmsg_id);
++		return -ENOENT;
++	}
++
++	sprintf(fpath, "%s/src", rpath);
++	free(rpath);
++
++	return file_read_value(fpath);
++}
++
+ static int _rpmsg_char_open_eptdev(struct rpmsg_char_endpt *ept,
+ 				   char *eptdev_name, int flags)
+ {
+@@ -450,7 +467,16 @@ static int _rpmsg_char_open_eptdev(struct rpmsg_char_endpt *ept,
+ 		return -errno;
+ 	}
+ 
++	/* local end-point is assigned after the open call */
++	endpt = _rpmsg_char_get_local_endpt(ept);
++	if (endpt < 0) {
++		_rpmsg_char_destroy_eptdev(efd);
++		fprintf(stdout, "%s: get_local_endpt failed %d \n",__func__,endpt);
++		return endpt;
++	}
++
+ 	ept->rcdev.fd = efd;
++	ept->rcdev.endpt = endpt;
+ 
+ 	return 0;
+ }
+-- 
+2.34.1
+
