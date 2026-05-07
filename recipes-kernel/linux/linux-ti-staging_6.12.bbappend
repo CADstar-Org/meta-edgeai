@@ -1,6 +1,6 @@
 require rtos-mem-map.inc
 
-SRCREV = "de0910685fe405c575e83cf05351441498b13a34"
+SRCREV = "f17ad26ebf6335d5b3e89e8693a8cac00e8fdfb2"
 
 KERNEL_GIT_PROTOCOL = "ssh"
 
