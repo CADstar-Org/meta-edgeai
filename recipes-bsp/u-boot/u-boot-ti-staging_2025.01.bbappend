@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRCREV_uboot = "f9285b5ec2ded0bd426a05599057715e52f6c520"
+SRCREV_uboot = "78bb8cc8a12687f810e5be4ac633ef3fd88bb00f"
 
 UBOOT_GIT_URI = "git://git@bitbucket.itg.ti.com/~a0501904/ti-u-boot.git"
 
