@@ -1,4 +1,4 @@
-From 6860ad7b30c3c210339445f3ee41fb3a34ee4edb Mon Sep 17 00:00:00 2001
+From 9f5012c7c0118d62b0c9fbf7e352005fab0829f6 Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
 Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
@@ -11,10 +11,10 @@ Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
  1 file changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index f93cd8526468..b506ab6980e9 100644
+index d05060b96284..5ad081b2a56b 100644
 --- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-@@ -239,6 +239,35 @@ mcu_r52ss2_core1_memory_region: r52-memory@b0100000 {
+@@ -238,6 +238,35 @@ mcu_r52ss2_core1_memory_region: r52-memory@b0100000 {
  			no-map;
  		};
  
@@ -50,7 +50,7 @@ index f93cd8526468..b506ab6980e9 100644
  		secure_ddr: optee@9e800000 {
  			reg = <0x00 0x9e800000 0x00 0x01800000>;
  			no-map;
-@@ -596,7 +625,7 @@ &main_sdhci1 {
+@@ -611,7 +640,7 @@ &main_sdhci1 {
  };
  
  &dss {
@@ -58,7 +58,7 @@ index f93cd8526468..b506ab6980e9 100644
 +	status = "disabled";
  };
  
- &dss_ports {
+ /*
 -- 
 2.34.1
 
