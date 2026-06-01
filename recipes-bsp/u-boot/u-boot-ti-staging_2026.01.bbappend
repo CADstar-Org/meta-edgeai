@@ -21,4 +21,8 @@ SRC_URI:append:j722s = " \
     file://0001-arch-arm-dts-k3-j722s-Update-memory-map-for-PSDK-RTO.patch \
 "
 
+SRC_URI:append:tda54 = " \
+    file://0001-WIP-TDA54-board-ti-tda54.env-Apply-overlay-if-reques.patch \
+"
+
 PR:append = "_edgeai_5"
