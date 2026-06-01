@@ -1,64 +1,105 @@
-From 9f5012c7c0118d62b0c9fbf7e352005fab0829f6 Mon Sep 17 00:00:00 2001
+From 679e8b19afbd49058a8a900fef78f995a9b70c0a Mon Sep 17 00:00:00 2001
 From: Shreyash Sinha <s-sinha@ti.com>
 Date: Tue, 15 Apr 2025 22:31:59 +0530
 Subject: [PATCH] arch/k3-tda54-vdk.dts: Add shared memory sections for vision
  apps
 
+Add shared memory layout and vision apps overlay for TDA54 VDK:
+- Add k3-tda54-vdk-rtos-memory-map.dtsi with shared memory regions
+- Add k3-tda54-vdk-vision-apps.dtso overlay for vision app support
+- Register new dtso in Makefile
+
 Upstream-Status: Inappropriate [embedded specific]
 Signed-off-by: Shreyash Sinha <s-sinha@ti.com>
 ---
- arch/arm64/boot/dts/ti/k3-tda54-vdk.dts | 31 ++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/Makefile               |  1 +
+ .../dts/ti/k3-tda54-vdk-rtos-memory-map.dtsi  | 40 +++++++++++++++++++
+ .../boot/dts/ti/k3-tda54-vdk-vision-apps.dtso | 17 ++++++++
+ 3 files changed, 58 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/ti/k3-tda54-vdk-rtos-memory-map.dtsi
+ create mode 100644 arch/arm64/boot/dts/ti/k3-tda54-vdk-vision-apps.dtso
 
-diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-index d05060b96284..5ad081b2a56b 100644
---- a/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk.dts
-@@ -238,6 +238,35 @@ mcu_r52ss2_core1_memory_region: r52-memory@b0100000 {
- 			no-map;
- 		};
+diff --git a/arch/arm64/boot/dts/ti/Makefile b/arch/arm64/boot/dts/ti/Makefile
+index eadbe6939fe5..c2ced0f9ba70 100644
+--- a/arch/arm64/boot/dts/ti/Makefile
++++ b/arch/arm64/boot/dts/ti/Makefile
+@@ -254,6 +254,7 @@ dtb-$(CONFIG_ARCH_K3) += k3-tda54-vdk-xen-dom0.dtbo
+ dtb-$(CONFIG_ARCH_K3) += k3-tda54-vdk-xen-dom0-static.dtbo
+ dtb-$(CONFIG_ARCH_K3) += k3-tda54-vdk-xen.dtbo
+ dtb-$(CONFIG_ARCH_K3) += k3-tda54-vdk-vcam.dtbo
++dtb-$(CONFIG_ARCH_K3) += k3-tda54-vdk-vision-apps.dtbo
  
-+		vision_apps_core_heaps_lo: vision-apps-core-heap-memory-lo@b9000000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xb9000000 0x00 0x02c00000>;
-+			no-map;
-+		};
-+
-+		vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bbc00000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xbbc00000 0x00 0x03000000>;
-+			no-map;
-+		};
-+
-+		vision_apps_memory_region: vision-apps-dma-memory@bec00000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xbec00000 0x00 0x01240000>;
-+			no-map;
-+		};
-+
-+		vision_apps_shared_region: vision_apps_shared-memories {
-+			compatible = "dma-heap-carveout";
-+			reg = <0x00 0xc0000000 0x00 0x1c000000>;
-+		};
-+
-+		c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@e0000000 {
-+			compatible = "shared-dma-pool";
-+			reg = <0x00 0xe0000000 0x00 0x20000000>;
-+			no-map;
-+		};
-+
- 		secure_ddr: optee@9e800000 {
- 			reg = <0x00 0x9e800000 0x00 0x01800000>;
- 			no-map;
-@@ -611,7 +640,7 @@ &main_sdhci1 {
- };
  
- &dss {
--	status = "okay";
-+	status = "disabled";
- };
- 
- /*
+ # Build time test only, enabled by CONFIG_OF_ALL_DTBS
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk-rtos-memory-map.dtsi b/arch/arm64/boot/dts/ti/k3-tda54-vdk-rtos-memory-map.dtsi
+new file mode 100644
+index 000000000000..a76f7b4a8ed7
+--- /dev/null
++++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk-rtos-memory-map.dtsi
+@@ -0,0 +1,40 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Vision-apps: device-tree overlay
++ * Copyright (C) 2026 Texas Instruments Incorporated - http://www.ti.com/
++ */
++
++&reserved_memory {
++	#address-cells = <2>;
++	#size-cells = <2>;
++
++	vision_apps_core_heaps_lo: vision-apps-core-heap-memory-lo@b9000000 {
++		compatible = "shared-dma-pool";
++		reg = <0x00 0xb9000000 0x00 0x02c00000>;
++		no-map;
++	};
++
++	vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@bbc00000 {
++		compatible = "shared-dma-pool";
++		reg = <0x00 0xbbc00000 0x00 0x03000000>;
++		no-map;
++	};
++
++	vision_apps_memory_region: vision-apps-dma-memory@bec00000 {
++		compatible = "shared-dma-pool";
++		reg = <0x00 0xbec00000 0x00 0x01240000>;
++		no-map;
++	};
++
++	vision_apps_shared_region: vision_apps_shared-memories {
++		compatible = "dma-heap-carveout";
++		reg = <0x00 0xc0000000 0x00 0x1c000000>;
++	};
++
++	c7x_ddr_heaps_hi: c7x-ddr-heaps-hi@2080000000 {
++		compatible = "shared-dma-pool";
++		reg = <0x20 0x80000000 0x00 0x20000000>;
++		no-map;
++	};
++};
++
+diff --git a/arch/arm64/boot/dts/ti/k3-tda54-vdk-vision-apps.dtso b/arch/arm64/boot/dts/ti/k3-tda54-vdk-vision-apps.dtso
+new file mode 100644
+index 000000000000..239a9dda3b4c
+--- /dev/null
++++ b/arch/arm64/boot/dts/ti/k3-tda54-vdk-vision-apps.dtso
+@@ -0,0 +1,17 @@
++// SPDX-License-Identifier: GPL-2.0
++
++/*
++*
++* vision-apps: device-tree overlay
++*
++* Copyright (C) 2026 Texas Instruments Incorporated - http://www.ti.com/
++*/
++
++/dts-v1/;
++/plugin/;
++
++#include "k3-tda54-vdk-rtos-memory-map.dtsi"
++
++&dss {
++    status = "disabled";
++};
 -- 
 2.34.1
 
