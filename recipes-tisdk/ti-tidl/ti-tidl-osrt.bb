@@ -7,20 +7,20 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 S = "${UNPACKDIR}/src"
 PR:append = "_edgeai_5"
 
-SRC_URI = "https://software-dl.ti.com/jacinto7/esd/tidl-tools/11_02_16_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tflite_runtime-2.12.0-cp312-cp312-linux_aarch64.whl;name=tflite;subdir=${S}/tflite\
-           https://software-dl.ti.com/jacinto7/esd/tidl-tools/11_02_16_00/OSRT_TOOLS/ARM_LINUX/ARAGO/onnxruntime_tidl-1.23.0-cp312-cp312-linux_aarch64.whl;name=ort;subdir=${S}/ort\
-           https://software-dl.ti.com/jacinto7/esd/tidl-tools/11_02_16_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tflite_2.12_aragoj7.tar.gz;name=tfl_lib;subdir=${S}/tfl_lib\
-           https://software-dl.ti.com/jacinto7/esd/tidl-tools/11_02_16_00/OSRT_TOOLS/ARM_LINUX/ARAGO/onnx_1.23.0_aragoj7.tar.gz;name=ort_lib;subdir=${S}/ort_lib\
+SRC_URI = "https://software-dl.ti.com/jacinto7/esd/tidl-tools/12_00_00_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tflite_runtime-2.12.0-cp314-cp314-linux_aarch64.whl;name=tflite;subdir=${S}/tflite\
+           https://software-dl.ti.com/jacinto7/esd/tidl-tools/12_00_00_00/OSRT_TOOLS/ARM_LINUX/ARAGO/onnxruntime_tidl-1.23.0-cp314-cp314-linux_aarch64.whl;name=ort;subdir=${S}/ort\
+           https://software-dl.ti.com/jacinto7/esd/tidl-tools/12_00_00_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tflite_2.12_aragoj7.tar.gz;name=tfl_lib;subdir=${S}/tfl_lib\
+           https://software-dl.ti.com/jacinto7/esd/tidl-tools/12_00_00_00/OSRT_TOOLS/ARM_LINUX/ARAGO/onnx_1.23.0_aragoj7.tar.gz;name=ort_lib;subdir=${S}/ort_lib\
            https://software-dl.ti.com/jacinto7/esd/tidl-tools/11_02_16_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tvm-0.18.0-cp312-cp312-linux_aarch64.whl;name=tvm;subdir=${S}/tvm\
-           https://software-dl.ti.com/jacinto7/esd/tidl-tools/11_02_16_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tidlruntime-0.1.0-cp312-cp312-linux_aarch64.whl;name=tidlrt;subdir=${S}/tidlrt\
+           https://software-dl.ti.com/jacinto7/esd/tidl-tools/12_00_00_00/OSRT_TOOLS/ARM_LINUX/ARAGO/tidlruntime-0.1.0-cp314-cp314-linux_aarch64.whl;name=tidlrt;subdir=${S}/tidlrt\
            "
 
-SRC_URI[tflite.sha256sum] = "1d0d2713956476b20eb765eeb71ad507d69c391e73a05b356dd5990e2b36ad3f"
-SRC_URI[ort.sha256sum] = "5b5b0ef852cf059bb3ee03996bc782900155f5b19eda63e1fce84fa13ac1648a"
-SRC_URI[tfl_lib.sha256sum] = "81b5c8d85725dace8baa0e9dbdceb1f79916d427797299566fb0b74ed8293a80"
-SRC_URI[ort_lib.sha256sum] = "27a1a39fb44b22a149f1fc13619f33d07cab7c6c07012789ede3f935c971e7f3"
+SRC_URI[tflite.sha256sum] = "7c60aae35b4c22ad6485fa68a9017feb549f08eba58ed62dbb074c8d98447c61"
+SRC_URI[ort.sha256sum] = "719e03cffb61f56de78561fe35ba58c5fc997bf2a2aade51e8b07b71fb419e70"
+SRC_URI[tfl_lib.sha256sum] = "e98bc1c793ee9e0de69cc56ad5e9098a048def1683ceda0159798827b77bd1ef"
+SRC_URI[ort_lib.sha256sum] = "5edc48315cb8d69e14e315cb06dad0845c9286a3ba02e6b339b56ae62a027d5d"
 SRC_URI[tvm.sha256sum] = "98e2d8f2c4ebb14eccc6bd1dfb1df6f0a872141fe7fd83e6fe41175f710648bd"
-SRC_URI[tidlrt.sha256sum] = "384d825a362db72411c10eccacfbbef5d4b487c159982a17e2788bb724c5a51e"
+SRC_URI[tidlrt.sha256sum] = "e328bb35c5d0016ba32d72032c1318f27c44a38cce142b47d3eeb9dd52a3c09f"
 
 do_cp_downloaded_build_deps() {
     mv ${S}/tfl_lib/*/* ${S}/tfl_lib
@@ -54,9 +54,9 @@ INSANE_SKIP:${PN} += "already-stripped"
 
 do_install() {
     install -d ${D}${PYTHON_SITEPACKAGES_DIR}
-    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tflite/tflite_runtime-2.12.0-cp312-cp312-linux_aarch64.whl
-    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/ort/onnxruntime_tidl-1.23.0-cp312-cp312-linux_aarch64.whl
-    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tidlrt/tidlruntime-0.1.0-cp312-cp312-linux_aarch64.whl
+    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tflite/tflite_runtime-2.12.0-cp314-cp314-linux_aarch64.whl
+    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/ort/onnxruntime_tidl-1.23.0-cp314-cp314-linux_aarch64.whl
+    unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tidlrt/tidlruntime-0.1.0-cp314-cp314-linux_aarch64.whl
     unzip -d ${D}${PYTHON_SITEPACKAGES_DIR} ${S}/tvm/tvm-0.18.0-cp312-cp312-linux_aarch64.whl
 
     install -d ${D}${includedir}
