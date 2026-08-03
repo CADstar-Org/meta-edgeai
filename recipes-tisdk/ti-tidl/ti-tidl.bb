@@ -17,10 +17,10 @@ SRCREV_protobuf="f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c"
 SRCREV_arm-tidl = "81fefa6907b933230f7ef62710a5e9440487f628"
 
 # Overwrite arm-tidl commit for am62a as it is latched to REL.TIDL.11.01.10.00
-SRCREV_arm-tidl:am62axx = "2951a2e1ca5e714638fd2537242539d3228ec083"
+SRCREV_arm-tidl:am62axx = "d185944362a3d949846d42afd762448bb0c28483"
 
 SRC_URI = " \
-    git://git.ti.com/git/processor-sdk-vision/arm-tidl.git;branch=master;protocol=https;name=arm-tidl;destsuffix=git/arm-tidl \
+    git://git.ti.com/git/processor-sdk-vision/arm-tidl.git;branch=release/11.1;protocol=https;name=arm-tidl;destsuffix=git/arm-tidl \
     git://git.ti.com/git/processor-sdk/concerto.git;branch=main;protocol=https;name=concerto;destsuffix=git/concerto \
     git://github.com/TexasInstruments/onnxruntime;branch=tidl-1.15;protocol=https;name=onnxruntime;destsuffix=git/onnxruntime  \
     git://github.com/TexasInstruments/tensorflow;branch=tidl-j7-2.12;protocol=https;name=tensorflow;destsuffix=git/tensorflow  \
