@@ -24,7 +24,10 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     file://${COREBASE}/meta/files/common-licenses/OpenSSL;md5=4eb1764f3e65fafa1a25057f9082f2ae \
                     "
 
-SRC_URI = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.11.02.01.01;manifest=vision_apps_yocto.xml"
+SRCREV_protobuf = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c"
+SRC_URI = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.11.02.01.01;manifest=vision_apps_yocto.xml \
+           git://github.com/protocolbuffers/protobuf;branch=main;protocol=https;name=protobuf;destsuffix=${UNPACKDIR}/repo/protobuf"
+
 SRC_URI:am62axx = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.AM62A.11.02.00.03;manifest=vision_apps_yocto_am62a.xml"
 SRC_URI:edgeai = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.NONSAFETY.11.01.00.03;manifest=vision_apps_yocto_nonsafety.xml"
 FILES:${PN} += "/opt/*"
@@ -38,7 +41,8 @@ FILES:${PN} += "/opt/*"
 
 DEPENDS = "glm freetype ti-rpmsg-char repo-native virtual/egl libpam"
 # nlohmann-json & stb is not needed for AM62A as it doesn't supports SRV demo
-DEPENDS:append:adas = " nlohmann-json stb"
+# For J7* devices, we build tidl_rt within yocto_build. For AM62A, tidl_rt is still built separately via ti-tidl recipe
+DEPENDS:append:adas = " nlohmann-json stb ti-tidl-osrt"
 
 COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
 
@@ -52,11 +56,13 @@ PLAT_SOC:am62axx = "am62a"
 
 S = "${UNPACKDIR}/repo/sdk_builder"
 
+export TARGET_FS = "${WORKDIR}/recipe-sysroot"
+
 do_fetch[depends] += "repo-native:do_populate_sysroot"
 
 CLEANBROKEN = "1"
 
-do_compile() {
+do_compile:am62axx() {
     CROSS_COMPILE_LINARO=aarch64-oe-linux- \
     LINUX_SYSROOT_ARM=${STAGING_DIR_TARGET} \
     TREAT_WARNINGS_AS_ERROR=0 \
@@ -64,6 +70,25 @@ do_compile() {
     GCC_LINUX_ARM_ROOT_A72= \
     LINUX_FS_PATH=${STAGING_DIR_TARGET} \
     SOC=${PLAT_SOC} \
+    oe_runmake yocto_build
+}
+
+do_compile() {
+    ln -snf ${TARGET_FS} ${UNPACKDIR}/repo/targetfs
+    
+    # Use ti-tidl-osrt installed headers and protobuf source from recipe-sysroot
+
+    PSDK_INSTALL_PATH=${UNPACKDIR}/repo \
+    CROSS_COMPILE_LINARO=aarch64-oe-linux- \
+    LINUX_SYSROOT_ARM=${STAGING_DIR_TARGET} \
+    TREAT_WARNINGS_AS_ERROR=0 \
+    GCC_LINUX_ARM_ROOT= \
+    GCC_LINUX_ARM_ROOT_A72= \
+    LINUX_FS_PATH=${TARGET_FS} \
+    SOC=${PLAT_SOC} \
+    TF_REPO_PATH="${TARGET_FS}${includedir}/tensorflow" \
+    ONNX_REPO_PATH="${TARGET_FS}${includedir}/onnxruntime" \
+    TIDL_PROTOBUF_PATH="${UNPACKDIR}/repo/protobuf" \
     oe_runmake yocto_build
 }
 

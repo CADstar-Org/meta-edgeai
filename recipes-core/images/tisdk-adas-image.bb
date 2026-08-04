@@ -8,7 +8,6 @@ COMPATIBLE_MACHINE = "j721e|j721s2|j784s4|j722s|j742s2|am62axx"
 
 ADAS_STACK = " \
         ti-vision-apps-dev \
-        ti-tidl-dev \
         ti-adas-firmware \
         ti-tidl-osrt-staticdev \
 "
