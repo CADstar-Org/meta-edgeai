@@ -6,9 +6,9 @@ LICENSE = "TI-TFL"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1f7721ee7d288457c5a70d0c8ff44b87"
 
 PV = "1.0.0"
-BRANCH = "main"
+BRANCH = "am62ax_sdk"
 SRC_URI = "git://git.ti.com/git/edgeai/edgeai-apps-utils.git;protocol=https;branch=${BRANCH}"
-SRCREV = "5a5a694ae02f0d2e4e39028b847e1c777c465cbf"
+SRCREV = "7d7ed84eab5221d798985bd138d06ed0e9c462c0"
 
 PLAT_SOC = ""
 PLAT_SOC:j721e = "j721e"
