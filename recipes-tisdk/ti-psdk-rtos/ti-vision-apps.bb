@@ -25,7 +25,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/../meta-ti/meta-ti-bsp/licenses/TI-TFL;md
                     "
 
 SRC_URI = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.11.02.00.05;manifest=vision_apps_yocto.xml"
-SRC_URI:am62axx = "repo://git@bitbucket.itg.ti.com/~a0501904/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.AM62A.ADAS.11.02.00.04;manifest=vision_apps_yocto_am62a_adas.xml"
+SRC_URI:am62axx = "repo://git@bitbucket.itg.ti.com/~a0501904/psdk_repo_manifests.git;protocol=ssh;branch=refs/tags/REL.PSDK.ANALYTICS.AM62A.ADAS.11.03.00.01;manifest=vision_apps_yocto_am62a_adas.xml"
 SRC_URI:edgeai = "repo://git.ti.com/git/processor-sdk/psdk_repo_manifests.git;protocol=https;branch=refs/tags/REL.PSDK.ANALYTICS.NONSAFETY.11.01.00.03;manifest=vision_apps_yocto_nonsafety.xml"
 FILES:${PN} += "/opt/*"
 
