@@ -1,4 +1,4 @@
-From e42b935c56567257d9dee8d1e98eaa839d848d2c Mon Sep 17 00:00:00 2001
+From 2903adf559f48a8889e68c235ab0f5f3acf05bac Mon Sep 17 00:00:00 2001
 From: Shyam Jagannathan <shyam.jagannathan@ti.com>
 Date: Mon, 5 Aug 2024 17:14:17 +0530
 Subject: [PATCH] Optimal QoS Settings
@@ -24,7 +24,7 @@ Signed-off-by: Shyam Jagannathan <shyam.jagannathan@ti.com>
  create mode 100644 arch/arm/mach-k3/include/mach/j721e_qos_params.h
 
 diff --git a/arch/arm/mach-k3/include/mach/hardware.h b/arch/arm/mach-k3/include/mach/hardware.h
-index 231c85f6748..73725c40e3a 100644
+index ec4e7b03..0436ec1e 100644
 --- a/arch/arm/mach-k3/include/mach/hardware.h
 +++ b/arch/arm/mach-k3/include/mach/hardware.h
 @@ -34,6 +34,7 @@
@@ -37,7 +37,7 @@ index 231c85f6748..73725c40e3a 100644
  #ifdef CONFIG_SOC_K3_J721S2
 diff --git a/arch/arm/mach-k3/include/mach/j721e_qos_params.h b/arch/arm/mach-k3/include/mach/j721e_qos_params.h
 new file mode 100644
-index 00000000000..e011e43e355
+index 00000000..e011e43e
 --- /dev/null
 +++ b/arch/arm/mach-k3/include/mach/j721e_qos_params.h
 @@ -0,0 +1,215 @@
@@ -257,10 +257,10 @@ index 00000000000..e011e43e355
 +
 +#endif
 diff --git a/drivers/ram/k3-ddrss/k3-ddrss.c b/drivers/ram/k3-ddrss/k3-ddrss.c
-index 3ebeb4882a6..3e1683265c1 100644
+index 8dc67673..8ed4c616 100644
 --- a/drivers/ram/k3-ddrss/k3-ddrss.c
 +++ b/drivers/ram/k3-ddrss/k3-ddrss.c
-@@ -1104,6 +1104,23 @@ static void k3_ddrss_run_retention_latch_clear_sequence(struct k3_ddrss_desc *dd
+@@ -1358,6 +1358,23 @@ static void k3_ddrss_run_retention_latch_clear_sequence(struct k3_ddrss_desc *dd
  }
  #endif
  
@@ -283,7 +283,7 @@ index 3ebeb4882a6..3e1683265c1 100644
 +
  static int k3_ddrss_probe(struct udevice *dev)
  {
- 	u64 end, bank0, bank1;
+ 	u64 bank0, bank1;
 -- 
 2.34.1
 
