@@ -2,6 +2,8 @@ TI_LINUX_FW_GIT_URI = "git://git@bitbucket.itg.ti.com/~a0501904/ti-linux-firmwar
 
 TI_LINUX_FW_GIT_PROTOCOL = "ssh"
 
+BRANCH = "ti-linux-firmware"
+
 DM_FIRMWARE:am62axx = "dm_adas_mcu1_0_release_strip.out"
 
 SRCREV = "2778630264cb9315d47c8585b313f04b1216a827"
