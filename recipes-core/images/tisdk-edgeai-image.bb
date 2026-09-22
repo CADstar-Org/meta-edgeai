@@ -39,8 +39,8 @@ EDGEAI_STACK = " \
 EDGEAI_STACK:am62dxx = " \
          ti-tidl-osrt-dev \
          ti-tidl-osrt-staticdev \
-         edgeai-tidl-runner \
          edgeai-tvm-artifacts \
+         edgeai-gst-plugins \
          edgeai-gst-plugins-dev \
          edgeai-gst-plugins-source \
 "
