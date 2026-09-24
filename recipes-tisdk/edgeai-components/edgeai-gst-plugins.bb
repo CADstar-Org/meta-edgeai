@@ -38,12 +38,42 @@ EXTRA_OEMESON:append:am62dxx = " -Ddl-plugins=disabled -Denable-tidl=disabled -D
 
 inherit meson pkgconfig
 
+#   This is a HACK: Current pkg-config version doesnt prepend
+#   sysroot_dir if the .pc file doesnt exists in sysroot,
+#   see: [0]
+#   This loop uses sed to rewrite the prefix path in all .pc
+#   files, redirecting them from the host's /usr directory to
+#   the Yocto target sysroot to ensure correct cross-compilation.
+#
+#   [0] https://github.com/pkgconf/pkgconf/pull/226
+
+
+do_configure:prepend:am62dxx() {
+    # Fix pkg-config files for cross-compilation
+    sed -i "s|^prefix=/usr|prefix=${STAGING_DIR_TARGET}/usr|g" ${S}/pkgconfig/*.pc
+}
+
 do_install:append() {
     CP_ARGS="-Prf --preserve=mode,timestamps --no-preserve=ownership"
 
     mkdir -p ${D}/opt/edgeai-gst-plugins/
     cp ${CP_ARGS} ${S}/* ${D}/opt/edgeai-gst-plugins
     cp ${CP_ARGS} ${B}/tests ${D}/opt/edgeai-gst-plugins/build
+}
+
+#   This is a HACK: Current pkg-config version doesnt prepend
+#   sysroot_dir if the .pc file doesnt exists in sysroot,
+#   see: [0]
+#   This loop strips the absolute Yocto sysroot paths from the
+#   installed .pc files and replaces them with standard /usr
+#   paths so that the packages remain portable and usable once
+#   installed on the actual target hardware..
+#
+#   [0] https://github.com/pkgconf/pkgconf/pull/226
+
+do_install:append:am62dxx() {
+    # Fix pkg-config paths in installed source files
+    sed -i "s|${STAGING_DIR_TARGET}/usr|/usr|g" ${D}/opt/edgeai-gst-plugins/pkgconfig/*.pc
 }
 
 INSANE_SKIP:${PN}-source += "dev-deps"
